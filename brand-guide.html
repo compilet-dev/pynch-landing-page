@@ -1206,6 +1206,186 @@
     }
 
     /* ═══════════════════════════════════════════════════════
+       HERO CARDS SECTION — dark bg (#0a0a14)
+    ═══════════════════════════════════════════════════════ */
+    .hero-cards-section {
+      background: var(--dark-bg);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero-cards-section .section-label  { color: var(--teal); }
+    .hero-cards-section .section-heading { color: var(--text-100); }
+    .hero-cards-section .section-subheading { color: var(--text-70); }
+
+    /* Live card demos */
+    .hc-demo-field {
+      position: relative;
+      width: 100%;
+      height: 340px;
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .hc-demo-card {
+      position: absolute;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      width: 200px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35);
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow 0.4s cubic-bezier(.4,0,.2,1), z-index 0s;
+    }
+    .hc-demo-card:hover {
+      transform: translateY(-14px) rotate(0deg) !important;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.55);
+      z-index: 10 !important;
+    }
+    .hc-demo-card:nth-child(1) { left: 5%;  top: 12%; transform: rotate(-6deg); z-index: 2; }
+    .hc-demo-card:nth-child(2) { left: 27%; top:  8%; transform: rotate(-2deg); z-index: 3; }
+    .hc-demo-card:nth-child(3) { right:27%; top: 14%; transform: rotate( 3deg); z-index: 4; }
+    .hc-demo-card:nth-child(4) { right: 5%; top: 10%; transform: rotate( 5deg); z-index: 2; }
+
+    .hc-card-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .hc-big-number {
+      font-size: clamp(2.5rem,5vw,3.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .hc-separator {
+      border: none;
+      border-top: 2px solid rgba(255,255,255,0.3);
+      margin: 10px 0;
+    }
+    .hc-subtitle {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.4;
+    }
+
+    /* Card type grid */
+    .hc-type-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    .hc-type-card {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,.4);
+    }
+    .hc-type-card-inner {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .hc-card-tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+    .hc-card-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.3;
+    }
+
+    /* Spec tables */
+    .hc-spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .hc-spec-block {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .hc-spec-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-50);
+      margin-bottom: 1.25rem;
+    }
+    .hc-spec-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8125rem;
+    }
+    .hc-spec-row:last-child { border-bottom: none; }
+    .hc-spec-prop { color: var(--text-70); font-weight: 600; }
+    .hc-spec-val  { font-family: var(--mono); font-size: 0.75rem; color: var(--teal); }
+
+    /* Animation diagram */
+    .hc-anim-diagram {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 2.5rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+    }
+    .hc-stack-card {
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 10px;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .hc-anim-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-50);
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .hc-demo-field { height: 260px; }
+      .hc-demo-card { width: 130px; }
+      .hc-type-grid { grid-template-columns: 1fr 1fr; }
+      .hc-spec-grid { grid-template-columns: 1fr; }
+      .hc-demo-card:nth-child(4) { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
        DOS AND DONTS — white bg
     ═══════════════════════════════════════════════════════ */
     .dodo-section {
@@ -1425,6 +1605,7 @@
             <li><a href="#glass">Glass</a></li>
             <li><a href="#shader">Shader</a></li>
             <li><a href="#stickers">Stickers</a></li>
+            <li><a href="#hero-cards">Hero Cards</a></li>
             <li><a href="#rules">Rules</a></li>
           </ul>
         </nav>
@@ -2717,6 +2898,425 @@
           <div class="sticker-spec-row"><div class="sticker-spec-prop">Animation</div><div class="sticker-spec-val">GSAP opacity 0→1 on ScrollTrigger enter</div></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════ HERO CARDS ════════════════════ -->
+  <section class="hero-cards-section" id="hero-cards">
+    <div class="container">
+      <span class="section-label">Hero Cards</span>
+      <h2 class="section-heading">Stacked creator cards</h2>
+      <p class="section-subheading">Four cards positioned absolutely inside <code style="font-family:var(--mono);font-size:0.85em;background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;">.card-field</code> at the base of the hero. They fan out at slight rotations, drift on scroll via GSAP ScrollTrigger, and play video on hover/tap. No autoplay — a 0.5s seek gives each card a thumbnail frame.</p>
+
+      <!-- ── Live card demos ── -->
+      <div class="hc-demo-field">
+        <!-- Card 1: Gradient -->
+        <div class="hc-demo-card" style="background:linear-gradient(135deg,#FF4D5A,#7B50C8);">
+          <div class="hc-card-content">
+            <div class="hc-card-tag">Card 1 · Gradient</div>
+            <div class="hc-card-label">Full-bleed video</div>
+          </div>
+        </div>
+        <!-- Card 2: Teal -->
+        <div class="hc-demo-card" style="background:#00D4AA;">
+          <div class="hc-card-content">
+            <div class="hc-card-tag">Card 2 · Teal</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <span style="font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;line-height:1;letter-spacing:-0.04em;color:#000;">2.1M</span>
+              <span style="font-size:0.72rem;font-weight:600;color:rgba(0,0,0,0.6);">organic views last month</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3: Purple static -->
+        <div class="hc-demo-card" style="background:#7B50C8;">
+          <div class="hc-card-content">
+            <div class="hc-card-tag">Card 3 · Purple</div>
+            <div>
+              <span style="display:block;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;line-height:1;letter-spacing:-0.04em;color:#fff;">2,000+</span>
+              <hr class="hc-separator">
+              <span class="hc-subtitle">It's still not enough</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4: Coral -->
+        <div class="hc-demo-card" style="background:#FF4D5A;">
+          <div class="hc-card-content">
+            <div class="hc-card-tag">Card 4 · Coral</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <span style="font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;line-height:1;letter-spacing:-0.04em;color:#fff;">92%</span>
+              <span style="font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.7);">avg response rate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Section 1: Card types & colours ── -->
+      <h3 style="color:var(--text-100);font-size:1.125rem;font-weight:700;margin-top:4rem;margin-bottom:0.5rem;">Card Types &amp; Colours</h3>
+      <p style="color:var(--text-70);font-size:0.9rem;margin-bottom:0;">Each card has a distinct background and role. Cards 1, 2 and 4 contain video; Card 3 is always static.</p>
+
+      <div class="hc-type-grid">
+        <!-- Card 1 -->
+        <div class="hc-type-card" style="background:linear-gradient(135deg,#FF4D5A 0%,#7B50C8 100%);">
+          <div class="hc-type-card-inner">
+            <div>
+              <div class="hc-card-tag">Card 1</div>
+              <div style="color:#fff;font-weight:700;font-size:0.8rem;margin-top:8px;">Gradient</div>
+            </div>
+            <div>
+              <div style="font-family:var(--mono);font-size:0.65rem;color:rgba(255,255,255,0.5);line-height:1.6;">
+                background: linear-gradient(<br>135deg,#FF4D5A,#7B50C8)<br><br>
+                Full-bleed video overlay.<br>Text overlay at bottom.
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="hc-type-card" style="background:#00D4AA;">
+          <div class="hc-type-card-inner">
+            <div>
+              <div class="hc-card-tag">Card 2</div>
+              <div style="color:#000;font-weight:700;font-size:0.8rem;margin-top:8px;">Teal #00D4AA</div>
+            </div>
+            <div>
+              <div style="font-family:var(--mono);font-size:0.65rem;color:rgba(0,0,0,0.55);line-height:1.6;">
+                background: #00D4AA<br><br>
+                Stat number top.<br>Hover video plays over.
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="hc-type-card" style="background:#7B50C8;">
+          <div class="hc-type-card-inner">
+            <div>
+              <div class="hc-card-tag">Card 3</div>
+              <div style="color:#fff;font-weight:700;font-size:0.8rem;margin-top:8px;">Purple #7B50C8</div>
+            </div>
+            <div>
+              <div style="color:#fff;font-weight:800;font-size:1.4rem;line-height:1;letter-spacing:-0.04em;">2,000+</div>
+              <hr style="border:none;border-top:2px solid rgba(255,255,255,0.3);margin:8px 0;">
+              <div style="font-family:var(--mono);font-size:0.65rem;color:rgba(255,255,255,0.5);">Static only. No video.</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="hc-type-card" style="background:#FF4D5A;">
+          <div class="hc-type-card-inner">
+            <div>
+              <div class="hc-card-tag">Card 4</div>
+              <div style="color:#fff;font-weight:700;font-size:0.8rem;margin-top:8px;">Coral #FF4D5A</div>
+            </div>
+            <div>
+              <div style="font-family:var(--mono);font-size:0.65rem;color:rgba(255,255,255,0.6);line-height:1.6;">
+                background: #FF4D5A<br><br>
+                Stat number top.<br>Hover video plays over.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Section 2: Card specs ── -->
+      <h3 style="color:var(--text-100);font-size:1.125rem;font-weight:700;margin-top:4rem;margin-bottom:0.5rem;">Card Specs</h3>
+      <p style="color:var(--text-70);font-size:0.9rem;margin-bottom:0;">Exact CSS from the live <code style="font-family:var(--mono);font-size:0.85em;background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;">.creator-card</code> and <code style="font-family:var(--mono);font-size:0.85em;background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;">.card-field</code> classes.</p>
+
+      <div class="hc-spec-grid">
+        <div class="hc-spec-block">
+          <div class="hc-spec-title">Container — .card-field</div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">position</div><div class="hc-spec-val">relative</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">width</div><div class="hc-spec-val">100%</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">height</div><div class="hc-spec-val">38vh (min-height: 320px)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">overflow</div><div class="hc-spec-val">visible</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">z-index</div><div class="hc-spec-val">1</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">pointer-events</div><div class="hc-spec-val">none (cards override)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">margin-top</div><div class="hc-spec-val">2rem</div></div>
+        </div>
+        <div class="hc-spec-block">
+          <div class="hc-spec-title">Each Card — .creator-card</div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">position</div><div class="hc-spec-val">absolute</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">aspect-ratio</div><div class="hc-spec-val">3/4</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">border-radius</div><div class="hc-spec-val">20px</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">overflow</div><div class="hc-spec-val">hidden</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">box-shadow</div><div class="hc-spec-val">0 8px 32px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">hover shadow</div><div class="hc-spec-val">0 24px 48px rgba(0,0,0,0.5)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">hover transform</div><div class="hc-spec-val">translateY(-12px) rotate(0deg)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">transition</div><div class="hc-spec-val">0.4s cubic-bezier(.4,0,.2,1)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">pointer-events</div><div class="hc-spec-val">auto</div></div>
+        </div>
+        <div class="hc-spec-block">
+          <div class="hc-spec-title">Card Positions &amp; Initial Rotations</div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Card 1</div><div class="hc-spec-val">left:-5% top:5% w:26vw rotate(-6deg) z:2</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Card 2</div><div class="hc-spec-val">left:22% top:2% w:28vw rotate(-2deg) z:3</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Card 3</div><div class="hc-spec-val">right:22% top:8% w:26vw rotate(3deg) z:4</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Card 4</div><div class="hc-spec-val">right:-5% top:3% w:26vw rotate(5deg) z:2</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">min-width</div><div class="hc-spec-val">240px (260px on card 2)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Mobile (≤768px)</div><div class="hc-spec-val">Cards 1–3 repositioned; card 4 hidden</div></div>
+        </div>
+        <div class="hc-spec-block">
+          <div class="hc-spec-title">Card Content Typography</div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">padding</div><div class="hc-spec-val">28px</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">layout</div><div class="hc-spec-val">flex column, justify-content: space-between</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">big number size</div><div class="hc-spec-val">clamp(3rem,8vw,5rem)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">big number weight</div><div class="hc-spec-val">800, line-height:1, letter-spacing:-0.04em</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">label size</div><div class="hc-spec-val">clamp(0.75rem,1.5vw,1rem)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">label weight</div><div class="hc-spec-val">600, color:rgba(0,0,0,0.6)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">overlay name</div><div class="hc-spec-val">1rem, weight 700, color #fff</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">overlay meta</div><div class="hc-spec-val">0.75rem, Geist Mono, rgba(255,255,255,.7)</div></div>
+        </div>
+      </div>
+
+      <!-- ── Code snippet: card CSS ── -->
+      <div class="code-block" style="margin-top:2rem;">
+        <pre><span class="c-comment">/* .card-field — absolute-positioned container */</span>
+<span class="c-key">.card-field</span> {
+  <span class="c-key">position</span>: <span class="c-val">relative</span>;
+  <span class="c-key">width</span>: <span class="c-val">100%</span>;
+  <span class="c-key">height</span>: <span class="c-val">38vh</span>;   <span class="c-comment">/* min-height: 320px */</span>
+  <span class="c-key">overflow</span>: <span class="c-val">visible</span>;
+  <span class="c-key">margin-top</span>: <span class="c-val">2rem</span>;
+  <span class="c-key">z-index</span>: <span class="c-val">1</span>;
+  <span class="c-key">pointer-events</span>: <span class="c-val">none</span>;
+}
+
+<span class="c-comment">/* individual card */</span>
+<span class="c-key">.creator-card</span> {
+  <span class="c-key">position</span>: <span class="c-val">absolute</span>;
+  <span class="c-key">border-radius</span>: <span class="c-val">20px</span>;
+  <span class="c-key">overflow</span>: <span class="c-val">hidden</span>;
+  <span class="c-key">cursor</span>: <span class="c-val">pointer</span>;
+  <span class="c-key">aspect-ratio</span>: <span class="c-val">3/4</span>;
+  <span class="c-key">pointer-events</span>: <span class="c-val">auto</span>;
+  <span class="c-key">box-shadow</span>: <span class="c-val">0 8px 32px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35)</span>;
+  <span class="c-key">transition</span>: <span class="c-val">transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow 0.4s cubic-bezier(.4,0,.2,1)</span>;
+}
+<span class="c-key">.creator-card:hover</span> {
+  <span class="c-key">transform</span>: <span class="c-val">translateY(-12px) rotate(0deg) !important</span>;
+  <span class="c-key">box-shadow</span>: <span class="c-val">0 24px 48px rgba(0,0,0,0.5)</span>;
+  <span class="c-key">z-index</span>: <span class="c-val">10 !important</span>;
+}
+
+<span class="c-comment">/* nth-child positions */</span>
+<span class="c-key">.creator-card:nth-child(1)</span> { <span class="c-key">left</span>:<span class="c-val">-5%</span>;   <span class="c-key">top</span>:<span class="c-val">5%</span>;  <span class="c-key">width</span>:<span class="c-val">26vw</span>; <span class="c-key">min-width</span>:<span class="c-val">240px</span>; <span class="c-key">transform</span>:<span class="c-val">rotate(-6deg)</span>; <span class="c-key">z-index</span>:<span class="c-val">2</span>; }
+<span class="c-key">.creator-card:nth-child(2)</span> { <span class="c-key">left</span>:<span class="c-val">22%</span>;   <span class="c-key">top</span>:<span class="c-val">2%</span>;  <span class="c-key">width</span>:<span class="c-val">28vw</span>; <span class="c-key">min-width</span>:<span class="c-val">260px</span>; <span class="c-key">transform</span>:<span class="c-val">rotate(-2deg)</span>; <span class="c-key">z-index</span>:<span class="c-val">3</span>; }
+<span class="c-key">.creator-card:nth-child(3)</span> { <span class="c-key">right</span>:<span class="c-val">22%</span>;  <span class="c-key">top</span>:<span class="c-val">8%</span>;  <span class="c-key">width</span>:<span class="c-val">26vw</span>; <span class="c-key">min-width</span>:<span class="c-val">240px</span>; <span class="c-key">transform</span>:<span class="c-val">rotate(3deg)</span>;  <span class="c-key">z-index</span>:<span class="c-val">4</span>; }
+<span class="c-key">.creator-card:nth-child(4)</span> { <span class="c-key">right</span>:<span class="c-val">-5%</span>;  <span class="c-key">top</span>:<span class="c-val">3%</span>;  <span class="c-key">width</span>:<span class="c-val">26vw</span>; <span class="c-key">min-width</span>:<span class="c-val">240px</span>; <span class="c-key">transform</span>:<span class="c-val">rotate(5deg)</span>;  <span class="c-key">z-index</span>:<span class="c-val">2</span>; }</pre>
+      </div>
+
+      <!-- ── Section 3: Video Behaviour ── -->
+      <h3 style="color:var(--text-100);font-size:1.125rem;font-weight:700;margin-top:4rem;margin-bottom:0.5rem;">Video Behaviour</h3>
+      <p style="color:var(--text-70);font-size:0.9rem;margin-bottom:0;">Videos are lazy-loaded with <code style="font-family:var(--mono);font-size:0.85em;background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;">preload="metadata"</code>. No autoplay. Each video is seeked to 0.5s after metadata loads to show a meaningful thumbnail frame.</p>
+
+      <div class="hc-spec-grid" style="margin-top:2rem;">
+        <div class="hc-spec-block">
+          <div class="hc-spec-title">HTML attributes</div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">muted</div><div class="hc-spec-val">always — required for play()</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">loop</div><div class="hc-spec-val">always</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">playsinline</div><div class="hc-spec-val">always — for iOS</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">preload</div><div class="hc-spec-val">"metadata" — no eager load</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">autoplay</div><div class="hc-spec-val">never</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">thumbnail seek</div><div class="hc-spec-val">currentTime = 0.5 on loadedmetadata</div></div>
+        </div>
+        <div class="hc-spec-block">
+          <div class="hc-spec-title">Interaction model</div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Desktop — mouseenter</div><div class="hc-spec-val">video.play()</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Desktop — mouseleave</div><div class="hc-spec-val">video.pause(); currentTime = 0.5</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Mobile — touchstart</div><div class="hc-spec-val">toggle play/pause</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Mobile reset on pause</div><div class="hc-spec-val">currentTime = 0.5</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">Detection</div><div class="hc-spec-val">'ontouchstart' in window ‖ navigator.maxTouchPoints &gt; 0</div></div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre><span class="c-comment">/* Card 1: gradient bg, full-bleed video (in .card-video) */</span>
+&lt;<span class="c-key">div</span> class=<span class="c-str">"creator-card card-video"</span> style=<span class="c-str">"background:linear-gradient(135deg,#FF4D5A,#7B50C8)"</span>&gt;
+  &lt;<span class="c-key">video</span> muted loop playsinline preload=<span class="c-str">"metadata"</span>&gt;
+    &lt;<span class="c-key">source</span> src=<span class="c-str">"videos/hero-video-2.mp4"</span> type=<span class="c-str">"video/mp4"</span>&gt;
+  &lt;/<span class="c-key">video</span>&gt;
+  &lt;<span class="c-key">div</span> class=<span class="c-str">"card-video-overlay"</span>&gt;
+    &lt;<span class="c-key">span</span> class=<span class="c-str">"card-video-name"</span>&gt;Mika Tanaka&lt;/<span class="c-key">span</span>&gt;
+    &lt;<span class="c-key">span</span> class=<span class="c-str">"card-video-meta"</span>&gt;@mikatanaka · 2.1M&lt;/<span class="c-key">span</span>&gt;
+  &lt;/<span class="c-key">div</span>&gt;
+&lt;/<span class="c-key">div</span>&gt;
+
+<span class="c-comment">/* Cards 2 &amp; 4: solid bg + hover video (.card-hover-video) */</span>
+&lt;<span class="c-key">div</span> class=<span class="c-str">"creator-card"</span> style=<span class="c-str">"background:#00D4AA"</span>&gt;
+  &lt;<span class="c-key">div</span> class=<span class="c-str">"card-content"</span>&gt;...stat...&lt;/<span class="c-key">div</span>&gt;
+  &lt;<span class="c-key">video</span> class=<span class="c-str">"card-hover-video"</span> muted loop playsinline preload=<span class="c-str">"metadata"</span>
+    src=<span class="c-str">"videos/hero-video-1.mp4"</span> aria-hidden=<span class="c-str">"true"</span>&gt;&lt;/<span class="c-key">video</span>&gt;
+&lt;/<span class="c-key">div</span>&gt;
+
+<span class="c-comment">/* JS — thumbnail seek + hover-to-play */</span>
+<span class="c-key">const</span> allVideos = document.querySelectorAll(<span class="c-str">'.creator-card video'</span>);
+<span class="c-key">const</span> isMobile = <span class="c-str">'ontouchstart'</span> <span class="c-key">in</span> window || navigator.maxTouchPoints &gt; <span class="c-val">0</span>;
+allVideos.forEach(video =&gt; {
+  video.addEventListener(<span class="c-str">'loadedmetadata'</span>, () =&gt; {
+    video.currentTime = <span class="c-val">0.5</span>;   <span class="c-comment">// thumbnail frame</span>
+  }, { once: <span class="c-val">true</span> });
+  <span class="c-key">const</span> card = video.closest(<span class="c-str">'.creator-card'</span>);
+  <span class="c-key">if</span> (isMobile) {
+    card.addEventListener(<span class="c-str">'touchstart'</span>, e =&gt; {
+      e.preventDefault();
+      playing ? (video.pause(), video.currentTime = <span class="c-val">0.5</span>, playing = <span class="c-val">false</span>)
+              : (video.play().catch(() =&gt; {}), playing = <span class="c-val">true</span>);
+    }, { passive: <span class="c-val">false</span> });
+  } <span class="c-key">else</span> {
+    card.addEventListener(<span class="c-str">'mouseenter'</span>, () =&gt; video.play().catch(() =&gt; {}));
+    card.addEventListener(<span class="c-str">'mouseleave'</span>, () =&gt; { video.pause(); video.currentTime = <span class="c-val">0.5</span>; });
+  }
+});</pre>
+      </div>
+
+      <!-- ── Section 4: Stacking animation ── -->
+      <h3 style="color:var(--text-100);font-size:1.125rem;font-weight:700;margin-top:4rem;margin-bottom:0.5rem;">Stacking Animation — GSAP ScrollTrigger</h3>
+      <p style="color:var(--text-70);font-size:0.9rem;margin-bottom:0;">On scroll, each card drifts vertically and rotates slightly via a scrubbed GSAP tween. Even-indexed cards drift up, odd-indexed drift down. The cards start fanned out; the scroll animation makes them slowly separate.</p>
+
+      <!-- Visual diagram -->
+      <div class="hc-anim-diagram">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+          <div class="hc-stack-card" style="width:70px;height:90px;background:linear-gradient(135deg,#FF4D5A,#7B50C8);transform:rotate(-6deg);">
+            <span style="font-size:0.5rem;color:rgba(255,255,255,0.6);">i=0</span>
+          </div>
+          <div class="hc-anim-label">Card 1<br>y: -60px<br>rot: -3deg</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+          <div class="hc-stack-card" style="width:70px;height:90px;background:#00D4AA;transform:rotate(-2deg);">
+            <span style="font-size:0.5rem;color:rgba(0,0,0,0.5);">i=1</span>
+          </div>
+          <div class="hc-anim-label">Card 2<br>y: +80px<br>rot: +3deg</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+          <div class="hc-stack-card" style="width:70px;height:90px;background:#7B50C8;transform:rotate(3deg);">
+            <span style="font-size:0.5rem;color:rgba(255,255,255,0.6);">i=2</span>
+          </div>
+          <div class="hc-anim-label">Card 3<br>y: -100px<br>rot: -3deg</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+          <div class="hc-stack-card" style="width:70px;height:90px;background:#FF4D5A;transform:rotate(5deg);">
+            <span style="font-size:0.5rem;color:rgba(255,255,255,0.6);">i=3</span>
+          </div>
+          <div class="hc-anim-label">Card 4<br>y: +120px<br>rot: +3deg</div>
+        </div>
+      </div>
+
+      <div class="hc-spec-grid" style="margin-top:1.5rem;">
+        <div class="hc-spec-block">
+          <div class="hc-spec-title">ScrollTrigger config</div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">trigger</div><div class="hc-spec-val">.card-field</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">start</div><div class="hc-spec-val">top center</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">end</div><div class="hc-spec-val">bottom top</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">scrub</div><div class="hc-spec-val">1 (smooth lag)</div></div>
+        </div>
+        <div class="hc-spec-block">
+          <div class="hc-spec-title">Per-card tween</div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">direction</div><div class="hc-spec-val">i % 2 === 0 → -1 (up) else +1 (down)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">y</div><div class="hc-spec-val">direction × 60 + (i × 20)</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">rotation</div><div class="hc-spec-val">+= direction × 3</div></div>
+          <div class="hc-spec-row"><div class="hc-spec-prop">ease</div><div class="hc-spec-val">none</div></div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre><span class="c-comment">/* GSAP ScrollTrigger — card drift on scroll */</span>
+gsap.utils.toArray(<span class="c-str">'.creator-card'</span>).forEach((card, i) =&gt; {
+  <span class="c-key">const</span> direction = i % <span class="c-val">2</span> === <span class="c-val">0</span> ? <span class="c-val">-1</span> : <span class="c-val">1</span>;   <span class="c-comment">// even = up, odd = down</span>
+  gsap.to(card, {
+    y: direction * <span class="c-val">60</span> + (i * <span class="c-val">20</span>),
+    rotation: <span class="c-str">`+=${direction * 3}`</span>,
+    ease: <span class="c-str">'none'</span>,
+    scrollTrigger: {
+      trigger: <span class="c-str">'.card-field'</span>,
+      start: <span class="c-str">'top center'</span>,
+      end: <span class="c-str">'bottom top'</span>,
+      scrub: <span class="c-val">1</span>,
+    },
+  });
+});</pre>
+      </div>
+
+      <!-- ── Section 5: Static card layout ── -->
+      <h3 style="color:var(--text-100);font-size:1.125rem;font-weight:700;margin-top:4rem;margin-bottom:0.5rem;">Static Card Layout (Card 3)</h3>
+      <p style="color:var(--text-70);font-size:0.9rem;margin-bottom:0;">Card 3 (purple) contains no video. It uses <code style="font-family:var(--mono);font-size:0.85em;background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;">justify-content: space-between</code> to pin the big number at the top and the separator + subtitle at the bottom.</p>
+
+      <div style="display:flex;gap:2rem;align-items:flex-start;margin-top:2rem;flex-wrap:wrap;">
+        <!-- Live card 3 preview -->
+        <div style="background:#7B50C8;border-radius:20px;padding:28px;aspect-ratio:3/4;width:200px;box-shadow:0 8px 32px rgba(0,0,0,.4);display:flex;flex-direction:column;justify-content:space-between;flex-shrink:0;">
+          <span style="font-size:clamp(2rem,5vw,2.5rem);font-weight:800;line-height:1;letter-spacing:-0.04em;color:#fff;">2,000+</span>
+          <div>
+            <div style="font-size:clamp(1rem,2vw,1.2rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:10px;">DMs to find 100 creators</div>
+            <hr style="border:none;border-top:2px solid rgba(255,255,255,0.3);margin:10px 0;">
+            <span style="font-size:clamp(0.75rem,1.2vw,0.9rem);font-weight:500;color:rgba(255,255,255,0.6);line-height:1.4;">It's still not enough</span>
+          </div>
+        </div>
+        <!-- Spec breakdown -->
+        <div style="flex:1;min-width:260px;">
+          <div class="hc-spec-block">
+            <div class="hc-spec-title">Purple static card HTML structure</div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">bg</div><div class="hc-spec-val">#7B50C8</div></div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">layout</div><div class="hc-spec-val">flex column, justify-content: space-between</div></div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">big stat</div><div class="hc-spec-val">"2,000+" — color:#fff, 800 weight</div></div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">sub-heading</div><div class="hc-spec-val">clamp(1.4rem,3vw,2rem), weight 700, color:#fff</div></div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">separator</div><div class="hc-spec-val">border-top:2px solid rgba(255,255,255,0.3), margin:12px 0</div></div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">subtitle</div><div class="hc-spec-val">"It's still not enough"</div></div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">subtitle size</div><div class="hc-spec-val">clamp(0.85rem,1.5vw,1.1rem), weight 500</div></div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">subtitle color</div><div class="hc-spec-val">rgba(255,255,255,0.6)</div></div>
+            <div class="hc-spec-row"><div class="hc-spec-prop">video</div><div class="hc-spec-val">none — fully static</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre><span class="c-comment">/* Card 3 — static purple stat card */</span>
+&lt;<span class="c-key">div</span> class=<span class="c-str">"creator-card"</span> style=<span class="c-str">"background:#7B50C8"</span>&gt;
+  &lt;<span class="c-key">div</span> class=<span class="c-str">"card-content"</span>&gt;  <span class="c-comment">&lt;!-- flex column, space-between --&gt;</span>
+    &lt;<span class="c-key">span</span> class=<span class="c-str">"card-big-number"</span> style=<span class="c-str">"color:#fff"</span>&gt;2,000+&lt;/<span class="c-key">span</span>&gt;
+    &lt;<span class="c-key">div</span> class=<span class="c-str">"card-stat-footer"</span>&gt;
+      &lt;<span class="c-key">span</span> style=<span class="c-str">"display:block;font-size:clamp(1.4rem,3vw,2rem);
+             font-weight:700;color:#fff;line-height:1.2"</span>&gt;
+        DMs to find 100 creators
+      &lt;/<span class="c-key">span</span>&gt;
+      &lt;<span class="c-key">hr</span> style=<span class="c-str">"border:none;border-top:2px solid rgba(255,255,255,0.3);margin:12px 0"</span>&gt;
+      &lt;<span class="c-key">span</span> style=<span class="c-str">"display:block;font-size:clamp(0.85rem,1.5vw,1.1rem);
+             font-weight:500;color:rgba(255,255,255,0.6);line-height:1.4"</span>&gt;
+        It&#39;s still not enough
+      &lt;/<span class="c-key">span</span>&gt;
+    &lt;/<span class="c-key">div</span>&gt;
+  &lt;/<span class="c-key">div</span>&gt;
+&lt;/<span class="c-key">div</span>&gt;</pre>
+      </div>
+
+      <!-- ── Video overlay CSS ── -->
+      <h3 style="color:var(--text-100);font-size:1.125rem;font-weight:700;margin-top:4rem;margin-bottom:0.5rem;">Video Overlay (Card 1)</h3>
+      <p style="color:var(--text-70);font-size:0.9rem;margin-bottom:0;">Card 1 uses a bottom-aligned gradient overlay for the creator name and social handle. The video is full-bleed, positioned absolute inside the card.</p>
+
+      <div class="code-block">
+        <pre><span class="c-key">.card-video</span> <span class="c-key">video</span> {
+  <span class="c-key">position</span>: <span class="c-val">absolute</span>;
+  <span class="c-key">top</span>: <span class="c-val">0</span>; <span class="c-key">left</span>: <span class="c-val">0</span>;
+  <span class="c-key">width</span>: <span class="c-val">100%</span>; <span class="c-key">height</span>: <span class="c-val">100%</span>;
+  <span class="c-key">object-fit</span>: <span class="c-val">cover</span>;
+  <span class="c-key">border-radius</span>: <span class="c-val">20px</span>;
+}
+<span class="c-key">.card-video-overlay</span> {
+  <span class="c-key">position</span>: <span class="c-val">absolute</span>;
+  <span class="c-key">bottom</span>: <span class="c-val">0</span>; <span class="c-key">left</span>: <span class="c-val">0</span>; <span class="c-key">right</span>: <span class="c-val">0</span>;
+  <span class="c-key">padding</span>: <span class="c-val">20px 24px</span>;
+  <span class="c-key">background</span>: <span class="c-val">linear-gradient(transparent, rgba(0,0,0,0.7))</span>;
+  <span class="c-key">border-radius</span>: <span class="c-val">0 0 20px 20px</span>;
+  <span class="c-key">z-index</span>: <span class="c-val">2</span>;
+}
+<span class="c-comment">/* Hover video (Cards 2 &amp; 4) */</span>
+<span class="c-key">.creator-card</span> <span class="c-key">.card-hover-video</span> {
+  <span class="c-key">position</span>: <span class="c-val">absolute</span>;
+  <span class="c-key">inset</span>: <span class="c-val">0</span>;
+  <span class="c-key">width</span>: <span class="c-val">100%</span>; <span class="c-key">height</span>: <span class="c-val">100%</span>;
+  <span class="c-key">object-fit</span>: <span class="c-val">cover</span>;
+  <span class="c-key">border-radius</span>: <span class="c-val">20px</span>;
+  <span class="c-key">opacity</span>: <span class="c-val">1</span>;
+  <span class="c-key">z-index</span>: <span class="c-val">3</span>;
+  <span class="c-key">pointer-events</span>: <span class="c-val">none</span>;
+}</pre>
+      </div>
+
     </div>
   </section>
 
