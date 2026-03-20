@@ -316,6 +316,136 @@
     .funnel-step:nth-child(3) .funnel-bar-num { color: var(--teal); }
 
     /* ══════════════════════════════════
+       WHAT WE'RE HEARING — Screenshot Carousel
+    ══════════════════════════════════ */
+    .hearing-section {
+      margin: 4rem 0 0;
+    }
+    .hearing-label {
+      margin-bottom: 1.5rem;
+    }
+    .hearing-carousel {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 1rem;
+      cursor: grab;
+    }
+    .hearing-carousel:active { cursor: grabbing; }
+    .hearing-carousel::-webkit-scrollbar {
+      height: 4px;
+    }
+    .hearing-carousel::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.08);
+      border-radius: 2px;
+    }
+    .hearing-carousel::-webkit-scrollbar-thumb {
+      background: var(--coral);
+      border-radius: 2px;
+    }
+    .hearing-card {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .hearing-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+    }
+    .hearing-card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      filter: blur(1px) brightness(0.55);
+      transition: filter 0.3s ease;
+    }
+    .hearing-card:hover .hearing-card-img {
+      filter: blur(0px) brightness(0.45);
+    }
+    .hearing-card-overlay {
+      position: absolute;
+      inset: 0;
+      padding: 1.1rem 1.1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.1) 0%,
+        rgba(10,10,20,0.75) 60%,
+        rgba(10,10,20,0.92) 100%
+      );
+    }
+    .hearing-source-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 0.5rem;
+      opacity: 0.9;
+    }
+    .hearing-quote {
+      font-size: 0.82rem;
+      font-weight: 600;
+      line-height: 1.45;
+      color: #fff;
+      font-style: italic;
+    }
+    .hearing-quote::before { content: '\201C'; }
+    .hearing-quote::after  { content: '\201D'; }
+
+    /* Lightbox */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,20,0.92);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+      backdrop-filter: blur(8px);
+    }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 12px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+    /* ══════════════════════════════════
        3. THE MARKET (dark)
     ══════════════════════════════════ */
     #market {
@@ -1027,6 +1157,7 @@
        MOBILE RESPONSIVE
     ══════════════════════════════════ */
     @media (max-width: 768px) {
+      .hearing-card { flex: 0 0 240px; }
       .problem-grid,
       .whynow-grid,
       .spartan-inner {
@@ -1128,6 +1259,55 @@
           </div>
         </div>
       </div>
+
+      <!-- What We're Hearing — full-width carousel -->
+      <div class="hearing-section reveal">
+        <div class="label coral hearing-label">What we're hearing</div>
+        <div class="hearing-carousel" id="hearingCarousel">
+
+          <div class="hearing-card" onclick="openLightbox('pynch-drive-images/1.png')">
+            <img src="pynch-drive-images/1.png" alt="User research screenshot 1" class="hearing-card-img" />
+            <div class="hearing-card-overlay">
+              <div class="hearing-source-tag">DM Conversation</div>
+              <p class="hearing-quote">I search TikTok and Instagram by hashtags... review content style, authenticity, aesthetic fit... then track everything in spreadsheets</p>
+            </div>
+          </div>
+
+          <div class="hearing-card" onclick="openLightbox('pynch-drive-images/2.png')">
+            <img src="pynch-drive-images/2.png" alt="User research screenshot 2" class="hearing-card-img" />
+            <div class="hearing-card-overlay">
+              <div class="hearing-source-tag">DM Conversation</div>
+              <p class="hearing-quote">Even with Modash and Aspire, I still find the best creators directly on TikTok. The tools help with discovery but fail at everything after.</p>
+            </div>
+          </div>
+
+          <div class="hearing-card" onclick="openLightbox('pynch-drive-images/3.png')">
+            <img src="pynch-drive-images/3.png" alt="User research screenshot 3" class="hearing-card-img" />
+            <div class="hearing-card-overlay">
+              <div class="hearing-source-tag">Slack</div>
+              <p class="hearing-quote">A few hours to a few days. At a big company? A full month.</p>
+            </div>
+          </div>
+
+          <div class="hearing-card" onclick="openLightbox('pynch-drive-images/4.png')">
+            <img src="pynch-drive-images/4.png" alt="User research screenshot 4" class="hearing-card-img" />
+            <div class="hearing-card-overlay">
+              <div class="hearing-source-tag">Chat</div>
+              <p class="hearing-quote">Outreach automation is weak. Creator vetting still takes forever. Campaign execution gets messy.</p>
+            </div>
+          </div>
+
+          <div class="hearing-card" onclick="openLightbox('pynch-drive-images/5.png')">
+            <img src="pynch-drive-images/5.png" alt="User research screenshot 5" class="hearing-card-img" />
+            <div class="hearing-card-overlay">
+              <div class="hearing-source-tag">Twitter / X</div>
+              <p class="hearing-quote">Finding creators isn't the hard part. Finding the RIGHT ones is.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1838,6 +2018,53 @@ void main(){
       });
     });
 
+    /* ── Hearing carousel drag-to-scroll ── */
+    (function() {
+      const carousel = document.getElementById('hearingCarousel');
+      if (!carousel) return;
+      let isDown = false, startX, scrollLeft;
+      carousel.addEventListener('mousedown', e => {
+        isDown = true;
+        carousel.classList.add('active');
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+      });
+      carousel.addEventListener('mouseleave', () => { isDown = false; });
+      carousel.addEventListener('mouseup', () => { isDown = false; });
+      carousel.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        carousel.scrollLeft = scrollLeft - (x - startX);
+      });
+    })();
+
+  </script>
+
+  <!-- Lightbox overlay -->
+  <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Screenshot" />
+  </div>
+
+  <script>
+    function openLightbox(src) {
+      const overlay = document.getElementById('lightboxOverlay');
+      const img = document.getElementById('lightboxImg');
+      img.src = src;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightboxOverlay').classList.remove('active');
+      document.getElementById('lightboxImg').src = '';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+    // Stop click propagation on the image itself (don't close when clicking image)
+    document.getElementById('lightboxImg').addEventListener('click', e => e.stopPropagation());
   </script>
 </body>
 </html>
