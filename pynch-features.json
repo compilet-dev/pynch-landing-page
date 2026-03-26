@@ -1,0 +1,1776 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-03-26",
+    "last_updated": "2026-03-26",
+    "status": "draft-for-review",
+    "description": "Pynch product feature map — source of truth for all features, sub-features, dependencies, and acceptance criteria. Built from feature-map-v2-brief.md + MVP prioritization + roadmap research.",
+    "total_features": 29,
+    "workstream_count": 7
+  },
+  "workstreams": [
+    {
+      "id": "creator-acquisition",
+      "name": "Creator Acquisition",
+      "emoji": "🔍",
+      "description": "Finding, sourcing, and reaching out to UGC creators across social platforms and creator marketplaces",
+      "color": "#E85D75"
+    },
+    {
+      "id": "creator-onboarding",
+      "name": "Creator Onboarding & Management",
+      "emoji": "🤝",
+      "description": "Bringing creators into the platform, building profiles, vetting quality, and managing ongoing relationships",
+      "color": "#C45ACF"
+    },
+    {
+      "id": "content-pipeline",
+      "name": "Content Pipeline",
+      "emoji": "🎬",
+      "description": "Briefing creators, collecting video/photo submissions, reviewing content quality, and managing the full content lifecycle",
+      "color": "#5A7BCF"
+    },
+    {
+      "id": "brand-dashboard",
+      "name": "Brand Dashboard",
+      "emoji": "📊",
+      "description": "Brand-facing views for managing creator rosters, monitoring campaign pipelines, and tracking performance at scale",
+      "color": "#5ABFCF"
+    },
+    {
+      "id": "creator-portal",
+      "name": "Creator Portal",
+      "emoji": "🎨",
+      "description": "Creator-facing portal for viewing briefs, submitting content, tracking payment status, and managing their public profile",
+      "color": "#5ACF8A"
+    },
+    {
+      "id": "payments-operations",
+      "name": "Payments & Operations",
+      "emoji": "💰",
+      "description": "Mass creator payouts, payment history tracking, contracts, and invoicing infrastructure",
+      "color": "#CFB55A"
+    },
+    {
+      "id": "internal-infrastructure",
+      "name": "Internal Infrastructure",
+      "emoji": "🔧",
+      "description": "Platform foundations that enable all other workstreams: creator backend, analytics infrastructure, scraping cost management",
+      "color": "#8A8A8A"
+    }
+  ],
+  "features": [
+    {
+      "id": "creator-backend-infra",
+      "name": "Creator Backend Infrastructure",
+      "workstream": "internal-infrastructure",
+      "description": "Core database and API layer for storing creator records, linking them to brands, and managing the data flow between all other platform features. The foundational layer everything else depends on.",
+      "status": "building",
+      "tier": "mvp",
+      "owner": null,
+      "dependencies": [],
+      "dependents": [
+        "branded-landing-pages",
+        "onboarding-flow",
+        "content-collection",
+        "mass-payments",
+        "creator-farm-view",
+        "pipeline-dashboard",
+        "branded-creator-hub"
+      ],
+      "sub_features": [
+        {
+          "id": "creator-backend-infra-data-model",
+          "name": "Creator Data Model",
+          "description": "Core database schema for creator records: identity, platform handles, status, brand assignments, payment info",
+          "tier": "mvp",
+          "status": "building",
+          "dependencies": [],
+          "acceptance_criteria": [
+            "Creator record stores: id, name, email, platform handles (IG/TikTok/YouTube), status (prospect/active/inactive/flagged), assigned brand IDs, created_at, updated_at",
+            "Creator can be linked to multiple brands simultaneously",
+            "Creator status changes are logged with timestamp and actor",
+            "All CRUD operations available via internal REST API",
+            "Records persist across sessions and survive server restart"
+          ],
+          "technical_notes": "PostgreSQL or equivalent. Consider multi-tenancy from the start — a creator can work with multiple brands on the platform.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-backend-infra-brand-multitenancy",
+          "name": "Brand Multi-Tenancy Model",
+          "description": "Data isolation and access control so Brand A cannot see Brand B's creator data, even for creators who work with both brands",
+          "tier": "mvp",
+          "status": "building",
+          "dependencies": ["creator-backend-infra-data-model"],
+          "acceptance_criteria": [
+            "API calls are scoped to the authenticated brand's ID by default",
+            "A creator appearing in two brands' rosters is stored once but linked to each brand separately",
+            "Brand A cannot access Brand B's briefs, submissions, or creator notes even if they share a creator",
+            "Admin (Spartan) can view cross-brand data for support purposes"
+          ],
+          "technical_notes": "Row-level security in Postgres or application-level tenant scoping. Decide early — retrofitting multi-tenancy is painful.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-backend-infra-auth",
+          "name": "Authentication & Authorization",
+          "description": "JWT-based auth for brand users and creators, with role-based access (brand admin, brand member, creator)",
+          "tier": "mvp",
+          "status": "building",
+          "dependencies": ["creator-backend-infra-data-model"],
+          "acceptance_criteria": [
+            "Brand admin can invite team members via email",
+            "Creator auth is separate from brand auth (different login flows)",
+            "JWT tokens expire after 24 hours, refresh tokens valid for 30 days",
+            "Password reset flow works end-to-end",
+            "Role-based access: brand admin sees billing + team settings; brand member sees campaigns only"
+          ],
+          "technical_notes": "Standard JWT/OAuth2. Consider magic link auth for creators — they're mobile-first and don't want to remember passwords.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "PostgreSQL vs another DB? Creator data is relational by nature.",
+        "How to handle a creator who signs up via Brand A's landing page and later Brand B's? Same creator record or separate?"
+      ],
+      "notes": "This is the invisible foundation. Nothing else can be built without it. Should be Sprint 0 work even in a vertical-slice approach.",
+      "connected_features": ["branded-landing-pages", "onboarding-flow"],
+      "user_stories": [
+        "As a brand, I want all my creator data to be isolated from other brands on the platform so my competitive creator list is protected",
+        "As Spartan (platform admin), I want to look up any creator across all brands to resolve support issues",
+        "As a creator, I want my account to work across all brands I collaborate with without needing separate logins"
+      ]
+    },
+    {
+      "id": "analytics-infra",
+      "name": "Analytics Infrastructure",
+      "workstream": "internal-infrastructure",
+      "description": "Greenfield analytics layer for tracking platform events, creator performance signals, and campaign metrics. No analytics infrastructure exists today.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["creator-backend-infra"],
+      "dependents": [
+        "creator-vetting-scoring",
+        "performance-tracking",
+        "payment-tracking",
+        "post-approval-distribution"
+      ],
+      "sub_features": [
+        {
+          "id": "analytics-infra-event-tracking",
+          "name": "Platform Event Tracking",
+          "description": "Log all meaningful platform events (DM sent, creator signed up, brief opened, video submitted, payment processed) for downstream analysis",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["creator-backend-infra-data-model"],
+          "acceptance_criteria": [
+            "Events table captures: event_type, actor_id, actor_type (brand/creator), resource_id, resource_type, timestamp, metadata JSON",
+            "All key funnel events are instrumented: outreach_sent, creator_signed_up, brief_received, content_submitted, content_approved, payment_sent",
+            "Events write is non-blocking (async) and does not slow down primary platform operations",
+            "Events are queryable by brand, creator, date range, and event type"
+          ],
+          "technical_notes": "Start simple — a Postgres events table is fine for MVP scale. Don't over-engineer with Kafka/Snowflake until volume justifies it.",
+          "effort_estimate": null
+        },
+        {
+          "id": "analytics-infra-metrics-api",
+          "name": "Metrics Aggregation API",
+          "description": "API layer that aggregates raw events into useful metrics: funnel conversion rates, creator reliability scores, campaign health",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["analytics-infra-event-tracking"],
+          "acceptance_criteria": [
+            "API returns outreach-to-reply rate for a given brand and date range",
+            "API returns submission rate (creators who submitted vs. briefed) by campaign",
+            "API returns average time-to-submission per creator",
+            "API response time under 500ms for standard date ranges (30-day window)",
+            "Metrics can be scoped by: brand, campaign, creator, date range"
+          ],
+          "technical_notes": "Materialized views or pre-aggregated tables for performance. Don't recompute on every request.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Do we start with Postgres materialized views or a dedicated analytics store (ClickHouse, BigQuery)?",
+        "What are the specific UGC campaign metrics Pynch should track? Needs separate research pass."
+      ],
+      "notes": "Completely greenfield. Nothing exists. This is blocking performance tracking and creator scoring — needs to be built in MLP phase.",
+      "connected_features": ["performance-tracking", "creator-vetting-scoring"],
+      "user_stories": [
+        "As a brand, I want to see how my outreach-to-reply rate has changed over the past 4 weeks",
+        "As Spartan, I want platform-level funnel data to understand where creators are dropping off",
+        "As a brand, I want to know which creators consistently deliver on time so I can prioritize working with them again"
+      ]
+    },
+    {
+      "id": "scraping-cost-optimization",
+      "name": "Scraping Cost Optimization",
+      "workstream": "internal-infrastructure",
+      "description": "Manage and reduce the cost of social platform and marketplace scraping that powers creator discovery. Either through technical optimization or cost pass-through to customers.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["creator-backend-infra"],
+      "dependents": ["creator-discovery"],
+      "sub_features": [
+        {
+          "id": "scraping-cost-optimization-caching",
+          "name": "Scraping Result Cache",
+          "description": "Cache scraped creator profiles so the same creator isn't re-scraped for every brand that searches for them",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["creator-backend-infra-data-model"],
+          "acceptance_criteria": [
+            "Scraped creator profile is stored with a TTL (time-to-live) of 7 days by default",
+            "If a cached profile exists and is within TTL, scraping API is not called again",
+            "Cache hit rate is logged and visible in admin dashboard",
+            "Stale profiles older than TTL are flagged for re-scrape on next access",
+            "Cache can be manually invalidated per creator by admin"
+          ],
+          "technical_notes": "Redis or Postgres with a scraped_at + ttl column. The platform-specific scraping clients should check cache before making expensive API calls.",
+          "effort_estimate": null
+        },
+        {
+          "id": "scraping-cost-optimization-usage-metering",
+          "name": "Scraping Usage Metering",
+          "description": "Track scraping API cost per brand so usage-based billing or credit models can be implemented",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["analytics-infra-event-tracking"],
+          "acceptance_criteria": [
+            "Each scraping API call is attributed to a brand and logged with estimated cost",
+            "Monthly scraping cost per brand is accessible via admin API",
+            "Brands approaching usage limits receive a warning notification",
+            "Usage metering does not add more than 20ms latency to scraping operations"
+          ],
+          "technical_notes": "This is prerequisite for any usage-based pricing model. Even if not billing on it immediately, start logging now.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "How to make scraping cheaper beyond having the customer pay? Proxy pooling, rate limiting, provider switching?",
+        "What is the current cost per 1,000 creator profiles scraped? Need baseline before optimizing."
+      ],
+      "notes": "Creator discovery is already live but scraping costs are a known pain point. This is infrastructure work that makes discovery scalable and profitable.",
+      "connected_features": ["creator-discovery"],
+      "user_stories": [
+        "As Spartan, I want to know exactly how much scraping each brand is consuming so we can price the product correctly",
+        "As a brand on the free/starter tier, I want my monthly discovery searches to not exceed a fair usage limit",
+        "As Spartan, I want cached creator profiles to reduce redundant API calls across brands searching similar niches"
+      ]
+    },
+    {
+      "id": "creator-discovery",
+      "name": "Creator Discovery",
+      "workstream": "creator-acquisition",
+      "description": "Find and filter UGC creators across social platforms (TikTok, Instagram) and non-social creator marketplaces (Collabstr, etc.). Build targeted lists by niche, engagement, and location.",
+      "status": "live",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["creator-backend-infra", "scraping-cost-optimization"],
+      "dependents": ["dm-outreach", "creator-profiles", "multi-platform-sourcing"],
+      "sub_features": [
+        {
+          "id": "creator-discovery-social-scraping",
+          "name": "Social Platform Scraping",
+          "description": "Automated scraping and data extraction from TikTok and Instagram to build creator lists with follower counts, engagement rates, niche tags, and contact handles",
+          "tier": "mlp",
+          "status": "live",
+          "dependencies": ["scraping-cost-optimization-caching"],
+          "acceptance_criteria": [
+            "Search returns creators on TikTok filtered by: niche keyword, follower count range, engagement rate threshold, location (country-level minimum)",
+            "Search returns creators on Instagram filtered by the same criteria",
+            "Each result includes: handle, follower count, estimated engagement rate, recent post examples, profile URL",
+            "A search of 100 creators completes in under 30 seconds",
+            "Results can be saved directly to a creator list without manual copy-paste",
+            "Scraping respects platform rate limits and does not trigger account bans"
+          ],
+          "technical_notes": "Each platform has its own scraping dependency and rate limit profile. TikTok and Instagram are the current live ones. Changes to platform APIs/anti-scraping measures can break these — treat as fragile infrastructure that needs monitoring.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-discovery-marketplace-scraping",
+          "name": "Non-Social Marketplace Scraping",
+          "description": "Scrape and ingest creator profiles from non-social platforms like Collabstr and other UGC creator marketplaces. These creators are self-listed and actively seeking brand work — different signal from social discovery.",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["scraping-cost-optimization-caching"],
+          "acceptance_criteria": [
+            "Collabstr creator profiles are scraped and normalized into the same creator record format as social platform creators",
+            "Creator records from marketplace sources are tagged with source: 'marketplace' and source_platform: 'collabstr' (or equivalent)",
+            "Marketplace creators can be filtered separately from social-sourced creators in search",
+            "Duplicate detection: if a creator found on Collabstr is already in the DB from Instagram scraping, they are merged into a single record",
+            "Marketplace scrape runs on a scheduled cadence (minimum daily) to catch new listings",
+            "Failed scrapes are logged and retried with exponential backoff"
+          ],
+          "technical_notes": "Collabstr is the primary target. Other marketplaces to evaluate: Billo, #Paid, Aspire creator self-listings. These are less anti-scraping hostile than TikTok/IG since they want discovery. Different scraper implementation needed per source.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-discovery-list-builder",
+          "name": "Creator List Builder",
+          "description": "Save, organize, and manage shortlists of creators discovered through search. Lists belong to a brand and form the pipeline entry point.",
+          "tier": "mlp",
+          "status": "live",
+          "dependencies": ["creator-discovery-social-scraping", "creator-backend-infra-data-model"],
+          "acceptance_criteria": [
+            "Brand can create a named list and add creators to it from search results",
+            "Brand can add or remove individual creators from a list",
+            "Brand can view all their lists with creator counts and last-updated timestamps",
+            "Lists can be renamed and deleted",
+            "A creator can appear in multiple lists",
+            "Bulk add: select up to 50 creators from search results and add to list in one action"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-discovery-search-filtering",
+          "name": "Advanced Search & Filtering",
+          "description": "Refined filtering controls for discovery searches: niche taxonomy, engagement quality (not just rate), location, follower tier, content type",
+          "tier": "mlp",
+          "status": "live",
+          "dependencies": ["creator-discovery-social-scraping"],
+          "acceptance_criteria": [
+            "Niche filter uses predefined categories (health/fitness, food, beauty, lifestyle, gaming, etc.) not just keyword",
+            "Engagement rate filter has preset tiers: micro (<5%), standard (5-10%), high (10%+)",
+            "Location filter works at country level minimum; city-level if data available",
+            "Follower count filter has preset tiers: nano (1K-10K), micro (10K-100K), macro (100K+)",
+            "Filters can be combined (e.g., health niche + Japan location + micro tier)",
+            "Filter state persists within a session so brand can refine without losing work"
+          ],
+          "technical_notes": "Niche taxonomy should be a maintained lookup table, not free-text. This feeds into creator profiles and scoring later.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "How to make scraping cheaper beyond having the customer pay? Technical optimization vs pricing model.",
+        "What is the current cost per 1,000 creators scraped across platforms? Need baseline.",
+        "For non-social marketplace sources: are there platform terms-of-service concerns with scraping Collabstr et al.?"
+      ],
+      "notes": "Discovery is live for TikTok and Instagram. Marketplace scraping (Collabstr etc.) is a distinct data source with different signal quality — these creators are actively looking for brand work. DietFit currently uses this to generate the 112 DMs/week.",
+      "connected_features": ["dm-outreach", "scraping-cost-optimization", "multi-platform-sourcing"],
+      "user_stories": [
+        "As a DietFit brand manager, I want to find 50 Japanese micro-influencers in the health/fitness niche on Instagram so I can build this week's outreach list",
+        "As a brand, I want to filter creators from Collabstr who are actively seeking brand deals so I can target warm leads instead of cold-pitching everyone",
+        "As a brand, I want my search results saved as a list so I can come back to them tomorrow without redoing the search"
+      ]
+    },
+    {
+      "id": "dm-outreach",
+      "name": "DM Outreach",
+      "workstream": "creator-acquisition",
+      "description": "Automated DM sequences with reply tracking and follow-ups. Currently running at 112 DMs/week for DietFit on Instagram. Foundation of Pynch's outbound acquisition engine.",
+      "status": "live",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["creator-discovery", "creator-backend-infra"],
+      "dependents": ["onboarding-flow", "pipeline-dashboard"],
+      "sub_features": [
+        {
+          "id": "dm-outreach-instagram-automation",
+          "name": "Instagram DM Automation",
+          "description": "Automated DM sending via Instagram with templated messages, personalization tokens, and send scheduling",
+          "tier": "mlp",
+          "status": "live",
+          "dependencies": ["creator-discovery-social-scraping"],
+          "acceptance_criteria": [
+            "Brand can create a DM template with personalization tokens: {{creator_name}}, {{brand_name}}, {{product_name}}",
+            "DMs can be sent to a creator list with rate limiting to avoid Instagram detection (max 50 DMs/day by default, configurable)",
+            "Each sent DM is logged with: creator_id, brand_id, sent_at, message_content, status (sent/failed)",
+            "Failed sends are retried up to 3 times with exponential backoff before marking as failed",
+            "Brand can pause or stop an active send sequence at any time",
+            "Sending rate is configurable per brand up to the safe maximum"
+          ],
+          "technical_notes": "Instagram DM automation is working but platform risk is real — automation can trigger account restrictions. Rate limiting is critical. Must monitor for platform policy changes.",
+          "effort_estimate": null
+        },
+        {
+          "id": "dm-outreach-reply-tracking",
+          "name": "Reply Tracking",
+          "description": "Monitor DMs for replies and surface positive responses to the brand for follow-up. Track reply rate as a key acquisition metric.",
+          "tier": "mlp",
+          "status": "live",
+          "dependencies": ["dm-outreach-instagram-automation", "analytics-infra-event-tracking"],
+          "acceptance_criteria": [
+            "System polls for DM replies at minimum every 15 minutes",
+            "Replies are categorized: positive (interested), negative (not interested), no reply",
+            "Brand receives notification when a creator replies positively",
+            "Reply rate (replies / DMs sent) is visible in the dashboard",
+            "Conversation thread is viewable from within Pynch without switching to Instagram"
+          ],
+          "technical_notes": "Polling frequency vs. Instagram API limits — need to balance freshness with rate limits. Conversation threading requires read permissions on DM inbox.",
+          "effort_estimate": null
+        },
+        {
+          "id": "dm-outreach-follow-up-sequences",
+          "name": "Follow-Up Sequences",
+          "description": "Automated follow-up DMs for creators who didn't reply to the initial outreach, with configurable timing and message templates",
+          "tier": "mlp",
+          "status": "building",
+          "dependencies": ["dm-outreach-reply-tracking"],
+          "acceptance_criteria": [
+            "Brand can configure up to 3 follow-up messages with configurable delays (e.g., follow-up 1 after 48h, follow-up 2 after 5 days)",
+            "Follow-ups are NOT sent to creators who have already replied (any reply stops the sequence)",
+            "Follow-ups are NOT sent to creators who explicitly said no",
+            "Each follow-up has its own template with personalization tokens",
+            "Brand can preview the full sequence (initial + follow-ups) before activating",
+            "Follow-up sequence can be disabled per-list or per-creator"
+          ],
+          "technical_notes": "Sequence state machine: PENDING -> SENT -> REPLIED (stop) | NO_REPLY -> FOLLOWUP_1 -> REPLIED (stop) | NO_REPLY -> FOLLOWUP_2 -> ARCHIVED",
+          "effort_estimate": null
+        },
+        {
+          "id": "dm-outreach-multi-platform",
+          "name": "Multi-Platform DM Expansion",
+          "description": "Extend DM automation beyond Instagram to TikTok and other platforms as technically feasible",
+          "tier": "future",
+          "status": "planned",
+          "dependencies": ["dm-outreach-instagram-automation", "multi-platform-sourcing"],
+          "acceptance_criteria": [
+            "TikTok DM automation works with the same template/sequence model as Instagram",
+            "Platform is clearly labeled on each outreach record so brand knows which channel was used",
+            "Each platform's rate limits and risk profile are independently configurable",
+            "Failed platform attempts (e.g., TikTok blocks automation) are surfaced as alerts, not silent failures"
+          ],
+          "technical_notes": "TikTok DM automation is significantly harder than Instagram — more aggressive anti-bot detection. This may require a human-assisted or semi-automated approach. Investigate feasibility before committing.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Scale outreach on-demand for each new platform or fake-it (manually manage) until volume justifies automation build?",
+        "What is the current Instagram DM acceptance rate and reply rate at 112/week for DietFit?",
+        "At what DM volume does Instagram start flagging accounts? Is 112/week safe long-term?"
+      ],
+      "notes": "Instagram DM automation is tested and working. Other platforms not yet automated. The 112 DMs/week at DietFit is the current live use case — this is the beating heart of Pynch's value proposition.",
+      "connected_features": ["creator-discovery", "pipeline-dashboard", "onboarding-flow"],
+      "user_stories": [
+        "As a DietFit brand manager, I want to send 112 personalized Instagram DMs this week to creators from my shortlist without manually typing each one",
+        "As a brand, I want to automatically send a follow-up DM to creators who haven't replied after 48 hours so I maximize response rate",
+        "As a brand, I want to see which creators replied positively so I can immediately move them to the onboarding stage"
+      ]
+    },
+    {
+      "id": "branded-landing-pages",
+      "name": "Branded Landing Pages",
+      "workstream": "creator-acquisition",
+      "description": "Per-brand creator recruitment pages at brand.pynchhq.com. The public face of Pynch for creators — where they land after clicking a DM link, and where they sign up. This is actually a system (front end + backend + email), not just a single page.",
+      "status": "live",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["creator-backend-infra"],
+      "dependents": ["onboarding-flow", "inbound-creator-applications"],
+      "sub_features": [
+        {
+          "id": "branded-landing-pages-frontend",
+          "name": "Landing Page Frontend",
+          "description": "Brand-customizable recruitment page where creators land after DM outreach. Shows what the brand is, what they're offering, and has a sign-up form.",
+          "tier": "mlp",
+          "status": "live",
+          "dependencies": [],
+          "acceptance_criteria": [
+            "Page loads at brand.pynchhq.com/[brand-slug] within 2 seconds on mobile (4G connection)",
+            "Brand can customize: logo, primary color, headline text, body copy, product images",
+            "Sign-up form captures: creator name, email, Instagram handle, TikTok handle (optional), why interested (optional)",
+            "Form submission confirmation page shows within 3 seconds of submit",
+            "Page renders correctly on iOS Safari and Android Chrome",
+            "Pynch branding is visible but not dominant (this is the brand's page)"
+          ],
+          "technical_notes": "Currently exists as a live page. The backend behind the form is the real gap. Static HTML with form submission to backend API is fine for MVP.",
+          "effort_estimate": null
+        },
+        {
+          "id": "branded-landing-pages-subdomain",
+          "name": "Brand Subdomain Routing",
+          "description": "Automatic subdomain provisioning for each brand at [brand-slug].pynchhq.com",
+          "tier": "mlp",
+          "status": "live",
+          "dependencies": ["branded-landing-pages-frontend"],
+          "acceptance_criteria": [
+            "New brand gets a subdomain within 60 seconds of brand account creation — no manual DNS steps by Spartan",
+            "Subdomain is URL-safe version of brand name (lowercase, hyphens, no special chars)",
+            "Wildcard SSL cert is valid for all subdomains",
+            "Brand can request a custom subdomain slug (subject to availability)",
+            "If brand is deactivated, their subdomain serves a 404 not a broken page"
+          ],
+          "technical_notes": "Wildcard DNS + wildcard SSL cert on the server. Cloudflare or similar can manage this. No per-brand DNS configuration required.",
+          "effort_estimate": null
+        },
+        {
+          "id": "branded-landing-pages-email-triggers",
+          "name": "Email Triggers & Notifications",
+          "description": "Automated emails triggered by creator sign-up events: confirmation to creator, notification to brand, and first-step onboarding nudge",
+          "tier": "mvp",
+          "status": "planned",
+          "dependencies": ["creator-backend-infra-data-model", "branded-landing-pages-frontend"],
+          "acceptance_criteria": [
+            "Creator receives confirmation email within 5 minutes of form submission",
+            "Confirmation email includes: brand name, what to expect next, link to complete their profile",
+            "Brand receives notification email within 5 minutes when a creator signs up via their landing page",
+            "Brand notification includes: creator name, Instagram handle, submission timestamp",
+            "Emails render correctly on Gmail iOS, Outlook, and Apple Mail",
+            "Email sending failures are logged and retried up to 3 times"
+          ],
+          "technical_notes": "SendGrid, Resend, or Postmark. Start with transactional emails only. No marketing sequences yet.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "The landing page exists — what exactly is missing from the backend system? Creator records being saved? Email triggers? Need to audit current state.",
+        "Should the landing page also be the creator's ongoing portal, or is that a separate URL?"
+      ],
+      "notes": "The front-end page is live. The backend system behind it (saving creator records, triggering emails, linking to the onboarding flow) is the real build. This feature is tightly interconnected with Onboarding Flow — they should be built together but scoped separately.",
+      "connected_features": ["onboarding-flow", "creator-backend-infra"],
+      "user_stories": [
+        "As a DietFit creator who received an Instagram DM, I want to click the link and immediately understand what DietFit is asking me to do",
+        "As a brand, I want creators who sign up to automatically appear in my creator list without me having to manually import anything",
+        "As a brand, I want my landing page to look like mine, not like a generic Pynch sign-up form"
+      ]
+    },
+    {
+      "id": "multi-platform-sourcing",
+      "name": "Multi-Platform Sourcing",
+      "workstream": "creator-acquisition",
+      "description": "Expand creator discovery beyond TikTok and Instagram to YouTube Shorts, X (Twitter), Lemon8, and other emerging platforms. Includes unified creator profiles that aggregate data across platforms.",
+      "status": "planned",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["creator-discovery", "creator-backend-infra"],
+      "dependents": ["dm-outreach"],
+      "sub_features": [
+        {
+          "id": "multi-platform-sourcing-youtube",
+          "name": "YouTube Shorts Sourcing",
+          "description": "Find and scrape YouTube Shorts creators as a source for UGC discovery",
+          "tier": "future",
+          "status": "planned",
+          "dependencies": ["creator-discovery-social-scraping"],
+          "acceptance_criteria": [
+            "YouTube Shorts creators are discoverable via the same search/filter interface as TikTok/Instagram",
+            "Creator records include: channel URL, subscriber count, Shorts view count average, upload frequency",
+            "YouTube-sourced creators are tagged with platform: youtube in their profile",
+            "Search results from YouTube can be mixed with TikTok/IG results in the same list"
+          ],
+          "technical_notes": "YouTube Data API v3 has official search endpoints — this is less scraping-dependent than TikTok/IG. Quota limits apply (~10,000 units/day on free tier).",
+          "effort_estimate": null
+        },
+        {
+          "id": "multi-platform-sourcing-unified-profile",
+          "name": "Unified Cross-Platform Creator Profile",
+          "description": "Merge a single creator's data across multiple platforms into one record (e.g., same creator found on both Instagram and TikTok)",
+          "tier": "future",
+          "status": "planned",
+          "dependencies": ["creator-discovery-social-scraping", "creator-discovery-marketplace-scraping"],
+          "acceptance_criteria": [
+            "System detects likely matches between creator records on different platforms using: name similarity, handle similarity, bio text, profile photo hash",
+            "Suggested merges are surfaced to brand for confirmation (not auto-merged)",
+            "Confirmed merged profile shows all platform data in one view: IG stats + TikTok stats side by side",
+            "Merged profiles count as one record in usage limits, not two",
+            "Merge can be undone (unlinked) if incorrect"
+          ],
+          "technical_notes": "Identity resolution is a hard problem. Start with explicit linking (creator self-reports their handles) rather than automated deduplication. Auto-dedup is an enhancement.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "What is the current status of scraping on each platform? Need exact breakdown of what works today.",
+        "Is X (Twitter) viable for UGC creator sourcing? Different content format from video-first platforms."
+      ],
+      "notes": "TikTok and Instagram are the live platforms. YouTube Shorts, X, and Lemon8 are future. Unified profiles require identity resolution which is complex — park for future.",
+      "connected_features": ["creator-discovery"],
+      "user_stories": [
+        "As a brand, I want to find creators who are growing on YouTube Shorts specifically because I need video-first content for YouTube ads",
+        "As a brand, I want to see a single profile for a creator I found on both Instagram and TikTok so I understand their full reach"
+      ]
+    },
+    {
+      "id": "inbound-creator-applications",
+      "name": "Inbound Creator Applications",
+      "workstream": "creator-acquisition",
+      "description": "Creators proactively find and apply to brands through Pynch. The full marketplace flip from outbound-only to two-sided discovery. Confirmed super far future state.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["creator-portfolio-profile", "branded-landing-pages"],
+      "dependents": [],
+      "sub_features": [],
+      "open_questions": [
+        "When does the product have enough supply (brands) to make inbound creator discovery valuable?",
+        "Does this cannibalize the outbound acquisition business model or complement it?"
+      ],
+      "notes": "Confirmed by Neel as super far future state. Keep on the map for strategic context. The Creator Portfolio PLG play is the likely gateway to this — creators building public profiles is the first step toward inbound discovery.",
+      "connected_features": ["creator-portfolio-profile", "branded-creator-hub"],
+      "user_stories": [
+        "As a creator, I want to browse brands on Pynch that are looking for creators in my niche and apply directly",
+        "As a brand, I want to receive applications from creators who have already proven they understand UGC briefs"
+      ]
+    },
+    {
+      "id": "onboarding-flow",
+      "name": "Onboarding Flow",
+      "workstream": "creator-onboarding",
+      "description": "The step-by-step journey from creator sign-up (via landing page) through profile completion, terms agreement, and receiving their first brief. The critical link between acquisition and content production.",
+      "status": "building",
+      "tier": "mvp",
+      "owner": null,
+      "dependencies": ["branded-landing-pages", "creator-backend-infra", "brief-builder"],
+      "dependents": [
+        "content-collection",
+        "mass-payments",
+        "creator-vetting-scoring",
+        "pipeline-dashboard",
+        "branded-creator-hub"
+      ],
+      "sub_features": [
+        {
+          "id": "onboarding-flow-signup",
+          "name": "Creator Sign-Up",
+          "description": "The form and confirmation step after a creator lands on a branded landing page and decides to apply",
+          "tier": "mvp",
+          "status": "building",
+          "dependencies": ["branded-landing-pages-frontend", "creator-backend-infra-auth"],
+          "acceptance_criteria": [
+            "Creator submits form with name, email, and at least one platform handle",
+            "Creator receives email confirmation within 5 minutes with a 'complete your profile' link",
+            "Creator record is created in backend with status: 'prospect'",
+            "If creator submits again with the same email, they receive a 'you're already signed up' message with a login link",
+            "Sign-up form works on mobile without horizontal scrolling"
+          ],
+          "technical_notes": "Magic link auth for creators is recommended — they're mobile-first and won't remember a password they set once. Send a login link via email.",
+          "effort_estimate": null
+        },
+        {
+          "id": "onboarding-flow-profile-completion",
+          "name": "Profile Completion Step",
+          "description": "Guided step where creator fills in their niche, content style, rates, and payment details before becoming active",
+          "tier": "mvp",
+          "status": "building",
+          "dependencies": ["onboarding-flow-signup"],
+          "acceptance_criteria": [
+            "Profile completion step is accessible from the email link without requiring a separate password",
+            "Required fields: content niche (select from list), preferred platforms, PayPal email (for payments), country of residence",
+            "Optional fields: bio, rate card, example content URLs",
+            "Progress bar shows how many steps remain (e.g., 'Step 2 of 4')",
+            "Creator can save and return to profile completion — progress is not lost if they close the browser",
+            "Profile completion triggers brand notification: '[Creator name] completed their profile'"
+          ],
+          "technical_notes": "Store partial completion state in DB, not session storage — creators will return on a different device.",
+          "effort_estimate": null
+        },
+        {
+          "id": "onboarding-flow-terms",
+          "name": "Terms & Agreement",
+          "description": "Click-to-agree terms of service and creator agreement before the creator can receive briefs",
+          "tier": "mvp",
+          "status": "planned",
+          "dependencies": ["onboarding-flow-profile-completion"],
+          "acceptance_criteria": [
+            "Creator must explicitly check a checkbox to agree — not just clicking 'next'",
+            "Agreement timestamp and creator ID are stored in DB for legal record",
+            "Creator cannot receive briefs until terms are agreed",
+            "Terms text is versioned — if terms are updated, active creators are asked to re-agree",
+            "Agreement PDF is emailed to creator after sign",
+            "Terms are readable on mobile without zooming"
+          ],
+          "technical_notes": "Terms for $50/video creators don't need DocuSign — click-to-agree is sufficient. Store version number with each agreement record so we know which terms they agreed to.",
+          "effort_estimate": null
+        },
+        {
+          "id": "onboarding-flow-first-brief",
+          "name": "First Brief Delivery",
+          "description": "Automated delivery of the brand's first brief to the creator upon completing onboarding",
+          "tier": "mvp",
+          "status": "planned",
+          "dependencies": ["onboarding-flow-terms", "brief-builder"],
+          "acceptance_criteria": [
+            "Within 30 minutes of completing onboarding, creator receives an email with their first brief attached",
+            "Brief email clearly shows: brand name, deadline, video requirements, payment amount",
+            "Creator can access the brief from the email without needing to log in to a portal",
+            "Brand receives notification when creator opens their first brief email (read receipt via tracking pixel)",
+            "If no brief is configured for the brand, creator receives a 'we'll be in touch soon' email instead — no silent void"
+          ],
+          "technical_notes": "This closes the onboarding loop. The 'creator goes into a void' fear is addressed here. Even if the portal isn't built yet, email delivery makes the creator feel they're in a real process.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "How tightly should onboarding flow be coupled to branded landing pages? Should they share a codebase?",
+        "What's the right level of minimum info to require at sign-up vs. profile completion? Don't want to lose creators in the funnel."
+      ],
+      "notes": "Tightly interconnected with Branded Landing Pages — they are two parts of the same creator journey. Built separately to avoid scope overload but deployed together. The key design principle: creators must NEVER feel like they submitted into a void.",
+      "connected_features": ["branded-landing-pages", "brief-builder", "content-collection"],
+      "user_stories": [
+        "As a creator who clicked a DietFit DM link, I want to sign up in under 3 minutes on my phone without creating a complex account",
+        "As a creator, I want to receive a clear email immediately after signing up so I know my application was received and what happens next",
+        "As a DietFit brand manager, I want to know the moment a creator completes onboarding so I can trigger their first brief without delay"
+      ]
+    },
+    {
+      "id": "creator-profiles",
+      "name": "Creator Profiles",
+      "workstream": "creator-onboarding",
+      "description": "Persistent creator records with niche, content style, platform stats, past work history, rate cards, and on-demand enrichment. The richer the profile, the better the matching and vetting.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["creator-backend-infra", "creator-discovery"],
+      "dependents": [
+        "creator-vetting-scoring",
+        "creator-farm-view",
+        "creator-portfolio-profile"
+      ],
+      "sub_features": [
+        {
+          "id": "creator-profiles-basic",
+          "name": "Basic Creator Profile",
+          "description": "Core profile data: identity, platform handles, niche, contact, rate, and onboarding-provided info",
+          "tier": "mvp",
+          "status": "planned",
+          "dependencies": ["onboarding-flow-profile-completion"],
+          "acceptance_criteria": [
+            "Profile displays: name, email, Instagram handle, TikTok handle, niche tags, country, rate (if provided), date joined, current status (prospect/active/inactive)",
+            "Profile is editable by the creator from their portal",
+            "Profile is viewable by any brand that has the creator in their roster",
+            "Last-updated timestamp visible to brand so they know how fresh the data is",
+            "Profile photo scraped from primary platform handle (or defaulted to initials avatar)"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-profiles-platform-stats",
+          "name": "Platform Stats Sync",
+          "description": "Automatically pull and update current follower counts, engagement rates, and recent post performance from connected platforms",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["creator-profiles-basic", "creator-discovery-social-scraping"],
+          "acceptance_criteria": [
+            "Profile shows current follower count and engagement rate for each linked platform",
+            "Stats are refreshed at minimum weekly (more frequently for active creators)",
+            "If stats can't be fetched (platform API change, account private), display last known values with a 'data may be outdated' flag",
+            "Stats history is retained: brand can see if a creator's engagement has grown or declined over time (minimum 90 days history)",
+            "Stat refresh timestamp is visible on the profile"
+          ],
+          "technical_notes": "Piggybacks on the scraping infrastructure from Creator Discovery. Scheduled refresh jobs per creator, prioritizing active creators.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-profiles-on-demand-enrichment",
+          "name": "On-Demand Profile Enrichment",
+          "description": "Clay-style waterfall enrichment triggered per-creator or per-batch by the brand. Deep data pull: audience demographics, brand affinity, content style analysis, contact info discovery. Not automatic — brand explicitly triggers it and consumes credits.",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["creator-profiles-platform-stats", "scraping-cost-optimization-usage-metering"],
+          "acceptance_criteria": [
+            "Brand can trigger enrichment for a single creator with one click from their profile view",
+            "Brand can trigger bulk enrichment for a list of up to 50 creators simultaneously",
+            "Enrichment job runs asynchronously — brand receives notification when complete, not a loading spinner",
+            "Enrichment surfaces: audience age/gender breakdown (if available), audience location top 3 countries, estimated reach, historical brand partnership data (if discoverable), email address (if public)",
+            "Each enrichment consumes a usage credit — cost is shown before confirming the action",
+            "Enrichment results are cached on the profile — re-triggering within 7 days shows cached result and prompts to refresh",
+            "If enrichment returns no additional data, credit is not consumed"
+          ],
+          "technical_notes": "Waterfall model: try cheap data sources first (public API), then more expensive ones (scraping, third-party enrichment APIs). Only consume expensive credits when cheaper sources fail. Similar to Clay's approach — don't hit Clearbit for everything when a Google search gets 80% of what's needed.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-profiles-work-history",
+          "name": "Work History & Past Campaigns",
+          "description": "Track which briefs a creator has received, their submission history, and brand relationships across the platform",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["creator-profiles-basic", "content-collection"],
+          "acceptance_criteria": [
+            "Profile shows: all campaigns the creator participated in (brand name, brief title, date, outcome: approved/rejected/pending)",
+            "Work history is visible to the brand who worked with that creator",
+            "Work history from other brands is visible only in aggregate: 'Has completed 8 campaigns on Pynch' not 'Worked with Nike, Adidas'",
+            "Creator can see their own full work history including all brands",
+            "Submission rate and approval rate are calculated and shown: 'Submitted on 9 of 10 campaigns (90%)'",
+            "Work history persists even if creator becomes inactive"
+          ],
+          "technical_notes": "Cross-brand privacy: brands should not see each other's creator relationships. Aggregate metrics ('8 campaigns on Pynch') are fine; specific brand names are not.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "How to price or gate the on-demand enrichment step? Per-credit vs. tier-based?",
+        "For enrichment: which third-party data providers are worth integrating? Modash? HypeAuditor? Custom scraping?",
+        "Creator rate cards — do we standardize the format or let creators free-text?"
+      ],
+      "notes": "Enrichment follows Clay's waterfall model: brand triggers it manually, system tries cheap sources first, expensive ones only if needed, brand consumes a credit. Not automatic for everyone.",
+      "connected_features": ["creator-vetting-scoring", "creator-farm-view"],
+      "user_stories": [
+        "As a DietFit brand manager reviewing 20 creator applications, I want to enrich the top 5 most promising ones so I get their audience demographics before deciding who to brief",
+        "As a brand, I want to see a creator's submission history at a glance so I don't onboard someone who ghosted another campaign",
+        "As a creator, I want my profile to show my best work automatically so brands can evaluate me without me having to manually build a portfolio"
+      ]
+    },
+    {
+      "id": "creator-vetting-scoring",
+      "name": "Creator Vetting & Scoring",
+      "workstream": "creator-onboarding",
+      "description": "Automated scoring of creators on engagement quality, content consistency, reply speed, and reliability. Surfaces the 8/10-who-is-easy-to-work-with over the 10/10-who-ghosts. Brand configures weighting.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["creator-profiles", "analytics-infra"],
+      "dependents": ["creator-farm-view", "pipeline-dashboard"],
+      "sub_features": [
+        {
+          "id": "creator-vetting-scoring-reliability-score",
+          "name": "Creator Reliability Score",
+          "description": "Behavioral score based on reply speed, submission rate, revision compliance, and deadline adherence — not just follower metrics",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["analytics-infra-metrics-api", "creator-profiles-work-history"],
+          "acceptance_criteria": [
+            "Reliability score is a 0-10 number displayed on every creator profile and farm view card",
+            "Score is computed from: reply speed to DMs (weight configurable), submission-on-time rate (weight configurable), revision acceptance rate (weight configurable), brief read confirmation (binary)",
+            "Score is only computed for creators with at least 3 data points (campaigns) — below threshold shows 'Insufficient data'",
+            "Score updates automatically after each completed campaign",
+            "Brand can see which signals contributed to a creator's score: 'Strong: submission speed. Weak: DM reply time'",
+            "Reliability badge ('Replies within 24h', 'Consistent submitter') shown on profile when creator meets threshold on specific signals"
+          ],
+          "technical_notes": "Start with simple weighted average. Don't over-engineer the model until there's enough data to validate signal quality.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-vetting-scoring-engagement-quality",
+          "name": "Engagement Quality Analysis",
+          "description": "Distinguish genuine engagement from inflated/bot engagement. Flag creators with suspicious engagement patterns.",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["creator-profiles-platform-stats"],
+          "acceptance_criteria": [
+            "Engagement rate is calculated as (likes + comments) / followers — not just raw likes",
+            "Comment-to-like ratio is flagged if below 0.02 (potential bot likes)",
+            "Follower growth spike detection: flag if a creator gained >20% followers in a 7-day period",
+            "Flagged creators show a yellow warning indicator — brand sees flag but makes final call",
+            "Auto-flag does not auto-reject — it surfaces to brand for human review",
+            "False positive resolution: brand can mark a flag as 'reviewed — ok' to dismiss it"
+          ],
+          "technical_notes": "Simple heuristics first. Full ML model is overkill until patterns are well-understood from real data.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-vetting-scoring-brand-weighting",
+          "name": "Brand-Configurable Score Weighting",
+          "description": "Brand can customize which creator quality signals matter most for their use case — DietFit may weight submission speed highly, another brand might weight engagement rate",
+          "tier": "future",
+          "status": "idea",
+          "dependencies": ["creator-vetting-scoring-reliability-score"],
+          "acceptance_criteria": [
+            "Brand settings page includes a scoring weight editor with sliders for each signal",
+            "Weights sum to 100% — UI enforces this constraint",
+            "Changing weights immediately recalculates scores for all creators in brand's roster",
+            "Brand can reset to platform default weights at any time",
+            "Weight configuration is per-brand, not per-campaign"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "What is the minimum data needed to produce a meaningful reliability score? 3 campaigns minimum seems right but needs validation.",
+        "Should scoring be visible to creators? Transparency could encourage better behavior or cause gaming."
+      ],
+      "notes": "Key insight: reliability and ease-of-collaboration may matter more than raw engagement metrics. An 8/10 creator who always submits on time beats a 10/10 who ghosts. Brand decides the weighting.",
+      "connected_features": ["creator-profiles", "creator-farm-view"],
+      "user_stories": [
+        "As a DietFit brand manager, I want to see a reliability score for each creator before briefing them so I can prioritize the ones who actually deliver",
+        "As a brand, I want to flag creators whose follower counts look bot-inflated so I don't waste budget on fake reach",
+        "As a brand with a tight deadline, I want to filter my creator list by reply speed so I pick creators who will respond within 24 hours"
+      ]
+    },
+    {
+      "id": "creator-coaching",
+      "name": "Creator Coaching",
+      "workstream": "creator-onboarding",
+      "description": "In-platform training flows for creators: how to shoot better UGC, how to read a brief, technical specs, brand safety guidelines. Confirmed important but needs design thinking on delivery format.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["onboarding-flow", "creator-profiles"],
+      "dependents": [],
+      "sub_features": [],
+      "open_questions": [
+        "How to deliver coaching effectively? Video modules? Checklists? Interactive quizzes?",
+        "Is coaching part of onboarding (mandatory) or an optional resource library?",
+        "Does coaching content need to be brand-specific (DietFit needs different guidance than a fashion brand)?"
+      ],
+      "notes": "Confirmed by Neel as really important but needs design thinking before building. Low UGC quality is a real pain point — coaching could reduce rejection rates significantly. Park for post-MLP.",
+      "connected_features": ["onboarding-flow", "content-review-workflow"],
+      "user_stories": [
+        "As a first-time UGC creator, I want clear guidance on what makes a good unboxing video before I shoot so I don't waste time on a video that gets rejected",
+        "As a brand, I want creators to understand my brand guidelines before they shoot so I spend less time on revision cycles",
+        "As a creator, I want to understand exactly what technical specs (resolution, duration, format) are required so my first submission is accepted"
+      ]
+    },
+    {
+      "id": "brief-builder",
+      "name": "Brief Builder",
+      "workstream": "content-pipeline",
+      "description": "Create, templatize, and send content briefs to creators. Defines the product info, creative direction, dos/don'ts, references, deadline, and payment for each video. Foundation of the entire content production process.",
+      "status": "building",
+      "tier": "mvp",
+      "owner": null,
+      "dependencies": ["creator-backend-infra"],
+      "dependents": [
+        "content-collection",
+        "content-review-workflow",
+        "onboarding-flow",
+        "pipeline-dashboard"
+      ],
+      "sub_features": [
+        {
+          "id": "brief-builder-creation",
+          "name": "Brief Creation",
+          "description": "Form-based interface for brand to create a brief: product details, creative direction, dos/don'ts, technical specs, examples, deadline, payment",
+          "tier": "mvp",
+          "status": "building",
+          "dependencies": ["creator-backend-infra-data-model"],
+          "acceptance_criteria": [
+            "Brief form includes: title, product name, product description, creative direction (rich text), dos (list), don'ts (list), example video URLs, technical specs (resolution, duration, format), deadline date, payment amount (USD)",
+            "Brief can be saved as draft before sending",
+            "Brief has a unique URL that can be shared directly with a creator",
+            "Brief is version-controlled — if a brand edits a brief after sending, creators who already received it see the original version",
+            "Brand can preview how the brief looks to a creator before sending"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        },
+        {
+          "id": "brief-builder-templates",
+          "name": "Brief Templates",
+          "description": "Reusable brief templates so brands don't recreate the same brief structure for every campaign",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["brief-builder-creation"],
+          "acceptance_criteria": [
+            "Brand can save any brief as a template with a custom name",
+            "Template library shows all saved templates with name, last-used date, and number of campaigns created from it",
+            "Creating a new brief from a template pre-fills all fields — brand only needs to update deadline and payment",
+            "Template edits do not affect existing briefs created from that template",
+            "Brand can duplicate and modify a template without overwriting the original"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        },
+        {
+          "id": "brief-builder-send",
+          "name": "Brief Distribution",
+          "description": "Send a brief to one or more creators from the brand's roster, with email notification and tracking",
+          "tier": "mvp",
+          "status": "building",
+          "dependencies": ["brief-builder-creation", "onboarding-flow"],
+          "acceptance_criteria": [
+            "Brand can select creators from their roster and send them a brief in one action (bulk select up to 100 creators)",
+            "Each selected creator receives a brief notification email within 10 minutes of send",
+            "Email includes: brief title, deadline, payment amount, and a direct link to view the full brief",
+            "Brief send is logged with timestamp, creator list, and brief version",
+            "Brand can see which creators have opened the brief email (open tracking via pixel)",
+            "Brand can resend the brief to creators who haven't opened it after 48 hours"
+          ],
+          "technical_notes": "Email open tracking requires a 1px tracking image in the email body. Standard practice but note some clients block tracking pixels.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Should briefs support attachments (PDF brand guidelines, example videos)? File size limits?",
+        "How does brief versioning work when a brand wants to send an updated brief mid-campaign?"
+      ],
+      "notes": "Connected to Content Review Workflow — the brief is the source of truth for auto-screening submissions against requirements. Build with that connection in mind from day one.",
+      "connected_features": ["content-collection", "content-review-workflow"],
+      "user_stories": [
+        "As a DietFit brand manager, I want to create a brief for 30 creators in under 10 minutes by reusing a template from last week's campaign",
+        "As a brand, I want to know which creators have opened their brief so I can follow up with the ones who haven't before the deadline",
+        "As a creator, I want to see the brief, deadline, and payment amount in a single email so I can decide immediately whether to accept the job"
+      ]
+    },
+    {
+      "id": "content-collection",
+      "name": "Content Collection",
+      "workstream": "content-pipeline",
+      "description": "Creators submit videos/photos against a brief. Status tracking, file management, and creator-facing visibility into the process. The most creator-experience-sensitive feature — creators must never feel their submission went into a void.",
+      "status": "planned",
+      "tier": "mvp",
+      "owner": null,
+      "dependencies": ["brief-builder", "creator-backend-infra", "onboarding-flow"],
+      "dependents": [
+        "content-review-workflow",
+        "content-library",
+        "payment-tracking",
+        "creator-profiles",
+        "pipeline-dashboard",
+        "analytics-infra"
+      ],
+      "sub_features": [
+        {
+          "id": "content-collection-file-upload",
+          "name": "File Upload",
+          "description": "Creator-facing interface to upload video/photo files against a specific brief",
+          "tier": "mvp",
+          "status": "planned",
+          "dependencies": ["brief-builder-send"],
+          "acceptance_criteria": [
+            "Creator can upload video files up to 500MB via the brief link (no account login required beyond magic link from email)",
+            "Supported formats: MP4, MOV, AVI for video; JPEG, PNG, WEBP for photos",
+            "Upload progress bar shows percentage complete in real-time",
+            "If upload fails (network error), creator can resume from where it left off — not start from scratch",
+            "Upload confirmation is shown immediately on success with a submission ID",
+            "Creator receives email confirmation within 5 minutes of successful upload: 'Your video for [brand] has been received'",
+            "Brand receives notification within 5 minutes: '[Creator name] submitted a video for [brief name]'"
+          ],
+          "technical_notes": "Use S3 or equivalent with chunked/multipart upload for large files. Generate a pre-signed upload URL from the backend — never upload directly through your server. Consider Google Drive integration as an alternative path (brief mentions this as an option).",
+          "effort_estimate": null
+        },
+        {
+          "id": "content-collection-status-tracking",
+          "name": "Submission Status Tracking",
+          "description": "Creator-visible status workflow that shows exactly where their submission is in the review process. Human-feeling, not cold.",
+          "tier": "mvp",
+          "status": "planned",
+          "dependencies": ["content-collection-file-upload"],
+          "acceptance_criteria": [
+            "Submission states: Submitted → Under Review → Approved | Revision Requested | Rejected",
+            "Creator can see current status for all their submissions without logging into a full portal (magic link email access is sufficient)",
+            "Status changes trigger email notifications to creator within 10 minutes",
+            "Status messages are warm and human: 'We're reviewing your video — we'll get back to you within 48 hours' not 'STATUS: PENDING'",
+            "Brand can add a personal note when changing status (shown to creator)",
+            "Estimated review timeline is communicated at submission time"
+          ],
+          "technical_notes": "Status must feel human even if it's automated. Write the actual email copy carefully — this is the creator's experience of the brand.",
+          "effort_estimate": null
+        },
+        {
+          "id": "content-collection-revision-flow",
+          "name": "Revision Request Flow",
+          "description": "Brand requests revisions with specific feedback; creator resubmits against the same brief",
+          "tier": "mvp",
+          "status": "planned",
+          "dependencies": ["content-collection-status-tracking"],
+          "acceptance_criteria": [
+            "Brand can mark a submission as 'Revision Requested' with a mandatory text feedback field",
+            "Feedback is sent to creator via email with a link to resubmit",
+            "Creator resubmission replaces the previous file — both versions are retained in the brief history",
+            "Revision cycle count is tracked: brief shows '2nd submission (1 revision requested)'",
+            "Brand can configure a maximum revision limit per campaign (default: 2)"
+          ],
+          "technical_notes": "Retain original files — never delete. Brands may need to compare original and revised. Storage cost is acceptable.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Google Drive integration as an alternative to direct upload — worth doing for MVP or MLP?",
+        "How to handle video files that are very large (1GB+)? Is this a real use case for UGC?",
+        "Should the brand be able to download all approved videos in a ZIP? Bulk export needs."
+      ],
+      "notes": "Key design insight: time-gated status updates must feel human and warm, not cold/robotic. 'Your video is being reviewed — we'll get back to you within 48 hours' not 'STATUS: UNDER_REVIEW'. This is about creator relationship quality.",
+      "connected_features": ["brief-builder", "content-review-workflow", "creator-portal"],
+      "user_stories": [
+        "As a creator, I want to submit my video from my phone via a link in the email — I don't want to create an account or download an app",
+        "As a creator, I want to know within 5 minutes that my upload was received so I don't worry that it got lost",
+        "As a DietFit brand manager reviewing 30 submissions this week, I want to see all submissions in one place with quick approve/reject/revise controls"
+      ]
+    },
+    {
+      "id": "content-review-workflow",
+      "name": "Content Review Workflow",
+      "workstream": "content-pipeline",
+      "description": "Brand reviews submitted videos. Includes basic auto-screening against brief requirements before human review. Flow: submit → auto-screen → human review → approve/revision/reject. Connected to brief builder for spec matching.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["content-collection", "brief-builder"],
+      "dependents": ["ai-content-qa", "content-library"],
+      "sub_features": [
+        {
+          "id": "content-review-workflow-brand-ui",
+          "name": "Brand Review Interface",
+          "description": "Dashboard view for brand to review all pending submissions for a campaign with inline playback and quick action controls",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["content-collection-file-upload"],
+          "acceptance_criteria": [
+            "Brand sees a queue of pending submissions sorted by: oldest first by default, filterable by creator name",
+            "Video plays inline in the review UI — no need to download to review",
+            "Review actions: Approve, Request Revision, Reject — all available from the same screen",
+            "Brand can write revision feedback inline without switching to a different view",
+            "Approved submissions show a green checkmark; revision-requested show an orange indicator; rejected show red",
+            "Bulk approve is available for submissions that clearly meet spec (select multiple + approve all)"
+          ],
+          "technical_notes": "In-browser video playback with adaptive streaming (HLS if possible) for large files. Don't force download.",
+          "effort_estimate": null
+        },
+        {
+          "id": "content-review-workflow-auto-screen",
+          "name": "Basic Auto-Screening",
+          "description": "Automated check of submission against brief technical specs before it reaches the human review queue. Filters out clear fails (wrong format, too short, too long).",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["content-collection-file-upload", "brief-builder-creation"],
+          "acceptance_criteria": [
+            "Auto-screen checks: video duration (within ±10% of brief spec), file format (matches accepted formats), file is not corrupt (plays without error)",
+            "Submissions failing auto-screen are flagged before entering brand review queue, not silently rejected",
+            "Auto-screen result is shown to brand: 'Video is 45 seconds — brief required 30-60 seconds. ✓'",
+            "Brand can override auto-screen flags and proceed to review anyway",
+            "Auto-screen failure triggers automatic email to creator: '[Brand name] found a technical issue with your submission — please re-upload. [Specific issue]'",
+            "Auto-screen failure email is warm in tone, not robotic"
+          ],
+          "technical_notes": "FFprobe for video metadata extraction (duration, format, codec). This runs server-side on upload. Runs before brand sees the submission.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Should auto-screen failure auto-decline the submission (saves brand time) or just flag it (more creator-friendly)?",
+        "Who writes the feedback templates for revision requests? Pynch provides defaults; brand can customize?"
+      ],
+      "notes": "Connected to Brief Builder — the brief is the input to the auto-screen. If brief specifies 30-60 seconds, auto-screen validates that. Build the data connection between these two from day one.",
+      "connected_features": ["brief-builder", "ai-content-qa", "content-collection"],
+      "user_stories": [
+        "As a DietFit brand manager with 30 submissions to review, I want to see all submissions in a queue with videos playing inline so I can review 30 videos in under an hour",
+        "As a brand, I want clearly off-spec videos (5 seconds long, wrong format) to be flagged automatically before they reach my review queue so I don't waste time on obvious failures",
+        "As a creator who submitted a video that's technically wrong, I want a specific automated message explaining what was wrong so I can fix it quickly"
+      ]
+    },
+    {
+      "id": "ai-content-qa",
+      "name": "AI Content QA",
+      "workstream": "content-pipeline",
+      "description": "AI-powered check for brand compliance, brief alignment, and content quality beyond basic technical specs. Simple scoring model for MVP. Had a working Gemini gem doing something similar.",
+      "status": "idea",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["content-review-workflow", "brief-builder"],
+      "dependents": [],
+      "sub_features": [
+        {
+          "id": "ai-content-qa-brief-alignment",
+          "name": "Brief Alignment Scoring",
+          "description": "AI reviews submitted video against the brief's creative direction and dos/don'ts and produces a compliance score",
+          "tier": "mlp",
+          "status": "idea",
+          "dependencies": ["content-review-workflow-auto-screen"],
+          "acceptance_criteria": [
+            "AI produces a 0-100 alignment score for each submission",
+            "Score is broken down by category: 'Product shown: ✓ | CTA mentioned: ✗ | Brand tone: ✓ | Duration: ✓'",
+            "Score is shown to brand in the review queue alongside the video — not instead of it",
+            "AI provides a plain-English reason for low scores: 'Product was not shown in the first 3 seconds as required by brief'",
+            "Brand can dismiss AI flags as incorrect — this feeds back to improve the model",
+            "AI QA adds no more than 3 minutes latency from submission to appearing in brand review queue"
+          ],
+          "technical_notes": "Gemini Vision API is the likely implementation — already had a working gem. Video frame extraction + brief text as prompt. Start with simple checklist evaluation before moving to semantic scoring.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Can a simple Gemini-based version add real value in MVP, or is the error rate too high to be useful?",
+        "How do we handle false positives — AI flags a good video as non-compliant? Need clear UX to override."
+      ],
+      "notes": "Already had a working Gemini gem doing something similar. A simple version is worth attempting for MLP — even an imperfect score that catches 50% of clear brief violations saves brand review time. Don't over-engineer.",
+      "connected_features": ["content-review-workflow", "brief-builder"],
+      "user_stories": [
+        "As a DietFit brand manager, I want an AI to flag videos where the creator didn't mention the promo code so I can catch that immediately without watching every video fully",
+        "As a brand, I want the AI compliance score to appear next to each submission in my review queue so I can prioritize reviewing the flagged ones first"
+      ]
+    },
+    {
+      "id": "content-library",
+      "name": "Content Library",
+      "workstream": "content-pipeline",
+      "description": "Centralized, searchable library of all approved content across all campaigns. Single source of truth for brand's UGC assets.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["content-collection", "content-review-workflow"],
+      "dependents": ["post-approval-distribution"],
+      "sub_features": [
+        {
+          "id": "content-library-search",
+          "name": "Content Search & Filter",
+          "description": "Search and filter approved content by: creator, campaign, niche, date, performance",
+          "tier": "future",
+          "status": "idea",
+          "dependencies": ["content-collection-file-upload"],
+          "acceptance_criteria": [
+            "Brand can search by creator name, brief name, or date range",
+            "Filter by approval status, campaign, and content type (video/photo)",
+            "Results show thumbnail, creator name, campaign, approval date, and performance data (if available)",
+            "Bulk download: select multiple assets and download as ZIP",
+            "Search returns results in under 2 seconds for libraries up to 10,000 assets"
+          ],
+          "technical_notes": "Full-text search on metadata. Video thumbnails generated server-side at upload time.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "How long does Pynch retain approved content? Storage cost at scale?",
+        "Do creators retain rights to their content after approval? License model needed before building this."
+      ],
+      "notes": "Gateway feature to Post-Approval Distribution. Not needed until brands have enough approved content to need a library. Future tier.",
+      "connected_features": ["post-approval-distribution"],
+      "user_stories": [
+        "As a brand with 200 approved UGC videos, I want to find all videos featuring Product X from the past 3 months so I can compile them for an ad campaign"
+      ]
+    },
+    {
+      "id": "post-approval-distribution",
+      "name": "Post-Approval Distribution",
+      "workstream": "content-pipeline",
+      "description": "Social scheduling from dashboard, performance monitoring on posted UGC, and winner identification. Closes the full flywheel: source → create → post → measure → boost winners.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["content-library", "performance-tracking"],
+      "dependents": [],
+      "sub_features": [],
+      "open_questions": [
+        "What platforms need scheduling integration? TikTok, Instagram, YouTube at minimum.",
+        "Performance data integration: pull from Meta Ads, TikTok Ads, or rely on organic analytics only?",
+        "Winner identification logic: what threshold triggers 'flag as ad candidate'? (e.g., >50K organic views)"
+      ],
+      "notes": "The strategic flywheel closer. Once this exists, Pynch owns the entire UGC lifecycle. The 'boost winners as ads' feature is particularly high-value — identifies which UGC works before spending paid budget on it.",
+      "connected_features": ["content-library", "performance-tracking", "campaign-mode"],
+      "user_stories": [
+        "As a DietFit brand manager, I want to schedule an approved UGC video to post on DietFit's Instagram account directly from Pynch",
+        "As a brand, I want to see which of my posted UGC videos is getting the most organic engagement so I can decide which one to boost as a paid ad"
+      ]
+    },
+    {
+      "id": "creator-farm-view",
+      "name": "Creator Farm View",
+      "workstream": "brand-dashboard",
+      "description": "The brand's master view of all creators in their roster — filterable by status, niche, quality score, and campaign history. Built for scale: hundreds to thousands of creators.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["creator-backend-infra", "creator-profiles", "creator-vetting-scoring"],
+      "dependents": ["pipeline-dashboard"],
+      "sub_features": [
+        {
+          "id": "creator-farm-view-list",
+          "name": "Creator Roster List View",
+          "description": "Paginated list of all creators in a brand's roster with key stats visible at a glance",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["creator-profiles-basic"],
+          "acceptance_criteria": [
+            "Table shows: creator name, primary platform handle, niche, status (prospect/active/inactive), reliability score, last-active date, total campaigns completed",
+            "Table paginates at 50 creators per page with infinite scroll or page navigation",
+            "Table loads first 50 results within 2 seconds for rosters up to 10,000 creators",
+            "Creator rows are clickable and expand to profile preview without full page navigation",
+            "Bulk actions: select multiple creators → add to list, send brief, mark inactive"
+          ],
+          "technical_notes": "Server-side pagination essential for scale. Never load all creators into the browser at once.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-farm-view-filters",
+          "name": "Roster Filtering & Search",
+          "description": "Filter the creator roster by niche, status, reliability score, platform, campaign history, and date added",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["creator-farm-view-list"],
+          "acceptance_criteria": [
+            "Filter by: status (multi-select), niche (multi-select), reliability score range (slider), platform (multi-select), campaigns completed (min/max range)",
+            "Free-text search on creator name and handle works with partial matches",
+            "Active filters are shown as removable chips above the table",
+            "Filter state persists during a session — navigating to a creator profile and back returns to the same filter state",
+            "Brand can save a filter combination as a named segment: e.g., 'High-reliability IG creators in fitness'"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "What's the right name for this view? 'Creator Farm' is internal — what does the brand-facing label say?",
+        "At what roster size does the view need virtualization for performance? Set a performance budget early."
+      ],
+      "notes": "Must be built for scale from day one. DietFit already has 112 DMs/week — if 10% convert, that's 11+ new creators per week. At 6 months, roster could be 250+ active creators.",
+      "connected_features": ["creator-vetting-scoring", "pipeline-dashboard"],
+      "user_stories": [
+        "As a DietFit brand manager with 300 creators in my roster, I want to quickly find all high-reliability Instagram creators in the fitness niche who haven't been briefed in the last 30 days",
+        "As a brand, I want to bulk-select 20 creators from my roster and send them a brief in one action",
+        "As a brand, I want to instantly see a creator's key stats — submissions, score, last active — without clicking into their full profile"
+      ]
+    },
+    {
+      "id": "pipeline-dashboard",
+      "name": "Pipeline Dashboard",
+      "workstream": "brand-dashboard",
+      "description": "Visualize the full creator journey: Outreach → Replied → Onboarded → Briefed → Submitted → Delivered. The WOW FACTOR feature. Shows the sheer volume of automated work. This is what sells the product in demos.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": [
+        "creator-backend-infra",
+        "dm-outreach",
+        "onboarding-flow",
+        "brief-builder",
+        "content-collection",
+        "analytics-infra"
+      ],
+      "dependents": ["campaign-mode"],
+      "sub_features": [
+        {
+          "id": "pipeline-dashboard-funnel-view",
+          "name": "Campaign Funnel View",
+          "description": "Kanban or funnel visualization showing all creators in each stage of the pipeline for a given campaign",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["analytics-infra-event-tracking"],
+          "acceptance_criteria": [
+            "Columns: DM Sent | Replied | Signed Up | Briefed | Submitted | Approved | Paid",
+            "Each creator card shows: name, handle, photo, and the date they entered this stage",
+            "Total count per column is shown as a header number: 'Replied (23)'",
+            "Cards are draggable between stages for manual override (e.g., brand manually marks a creator as 'replied' after an email conversation)",
+            "Clicking a creator card opens their profile in a side panel without leaving the pipeline view",
+            "Dashboard refreshes automatically every 60 seconds — no manual reload needed"
+          ],
+          "technical_notes": "Funnel counts must be computed from the analytics events table. WebSocket or polling for real-time updates.",
+          "effort_estimate": null
+        },
+        {
+          "id": "pipeline-dashboard-conversion-metrics",
+          "name": "Funnel Conversion Metrics",
+          "description": "Conversion rates between each pipeline stage so brand can identify where creators are dropping off",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["pipeline-dashboard-funnel-view", "analytics-infra-metrics-api"],
+          "acceptance_criteria": [
+            "Conversion rate shown between each stage: 'DM Sent → Replied: 18%'",
+            "Time-in-stage average shown: 'Average time from DM Sent to Replied: 2.3 days'",
+            "Trend indicator: is this conversion rate improving or declining vs. last campaign? (↑ or ↓ arrow)",
+            "Metrics are scoped to the selected campaign — not global across all campaigns",
+            "Brand can toggle between current campaign view and trailing 90-day aggregate"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Should the pipeline view be per-campaign, per-brand (all campaigns), or switchable between both?",
+        "How to handle creators who are in multiple active campaigns simultaneously?"
+      ],
+      "notes": "This is the demo moment. 'Here's 300 creators moving through the pipeline automatically' is the thing that makes brands immediately understand Pynch's value. Polish matters here.",
+      "connected_features": ["creator-farm-view", "analytics-infra"],
+      "user_stories": [
+        "As a Pynch salesperson demoing the product, I want to show a brand exactly how many creators are at each pipeline stage in real-time so they immediately understand what $500/month buys",
+        "As a DietFit brand manager, I want to see that 18 of the 112 DMs I sent this week have already replied and 5 have signed up, without manually checking each conversation",
+        "As a brand, I want to know which pipeline stage has the worst drop-off rate so I can focus my improvement effort there"
+      ]
+    },
+    {
+      "id": "performance-tracking",
+      "name": "Performance Tracking",
+      "workstream": "brand-dashboard",
+      "description": "UGC campaign performance metrics: CPV, CPI, ROAS (if boosted), operational health (submission speed, brief accuracy), and creator reliability. Needs research on right metrics. Entirely greenfield.",
+      "status": "planned",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["analytics-infra", "content-collection", "mass-payments"],
+      "dependents": ["post-approval-distribution", "campaign-mode"],
+      "sub_features": [
+        {
+          "id": "performance-tracking-operational",
+          "name": "Operational Health Metrics",
+          "description": "Track the operational efficiency of UGC production: submission speed, revision rate, brief accuracy, creator reliability over time",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["analytics-infra-metrics-api"],
+          "acceptance_criteria": [
+            "Dashboard shows: average time from brief sent to submission (days), revision request rate (% of submissions needing revision), creator on-time rate (% submitted before deadline)",
+            "Metrics are shown per-campaign and as trailing 90-day averages",
+            "Trend indicators show whether each metric is improving or declining",
+            "Brief accuracy score: how often creators follow the brief on first submission (derived from revision rate + AI QA flags)"
+          ],
+          "technical_notes": "All computable from events already in the analytics infra. Build this as a metrics API endpoint first, then surface in UI.",
+          "effort_estimate": null
+        },
+        {
+          "id": "performance-tracking-campaign-roi",
+          "name": "Campaign ROI Metrics",
+          "description": "Track CPV, spend per video, total campaign cost, and ROAS if UGC is boosted as ads",
+          "tier": "future",
+          "status": "idea",
+          "dependencies": ["performance-tracking-operational", "mass-payments"],
+          "acceptance_criteria": [
+            "Campaign summary shows: total creators, total videos approved, total spend (sum of payments), cost per approved video",
+            "If brand connects ad accounts: ROAS and CPM data pulled from Meta/TikTok ads for content boosted from Pynch",
+            "Brand can compare cost-per-approved-video across campaigns to see if brief quality improvements are working",
+            "Export: campaign performance report as CSV or PDF"
+          ],
+          "technical_notes": "Ad account integration (Meta Business API, TikTok Marketing API) is complex — treat as separate sub-feature, not bundled with basic ROI metrics.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "What are the right UGC campaign metrics? Needs dedicated research pass.",
+        "Do brands actually need CPV/ROAS from Pynch, or do they track that in their ad platforms? Risk of building something brands already have.",
+        "Creator reliability score: is this performance tracking or creator vetting? May need to consolidate."
+      ],
+      "notes": "Greenfield — no existing analytics infrastructure. Start with operational health metrics (fully computable from platform events) before attempting campaign ROI which requires ad platform integrations.",
+      "connected_features": ["analytics-infra", "campaign-mode", "post-approval-distribution"],
+      "user_stories": [
+        "As a DietFit brand manager, I want to see my average cost-per-approved-video this quarter vs. last quarter to measure whether our brief templates are getting better",
+        "As a brand, I want to see which creators consistently deliver on deadline so I can prioritize briefing them in future campaigns"
+      ]
+    },
+    {
+      "id": "campaign-mode",
+      "name": "Campaign Mode",
+      "workstream": "brand-dashboard",
+      "description": "Separate UX mode for high-value, audience-buying campaigns. Different from the Farm Mode creator roster — about buying reach and audience, not just content production. Requires its own design pass.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["pipeline-dashboard", "performance-tracking"],
+      "dependents": [],
+      "sub_features": [],
+      "open_questions": [
+        "What does the UX fundamentally look like different from the Farm view? Needs dedicated design sprint.",
+        "Target creator tier for Campaign Mode: macro-influencers (100K+)? Higher rates, lower volume.",
+        "Is Campaign Mode a completely separate product tier or just a different view within the same brand account?"
+      ],
+      "notes": "Neel confirmed: different view, different creator tier. About buying AUDIENCE, not buying content. Higher value, lower volume ($50/video creators are not the target). Needs its own UX design pass separate from Farm Mode. Future tier.",
+      "connected_features": ["pipeline-dashboard", "performance-tracking"],
+      "user_stories": [
+        "As a DietFit campaign manager running a major product launch, I want to work with 5 macro-influencers who have audiences of 500K+ rather than 100 micro-creators",
+        "As a brand, I want a campaign-level view that shows total expected reach across all creators for a given campaign launch date"
+      ]
+    },
+    {
+      "id": "branded-creator-hub",
+      "name": "Branded Creator Hub",
+      "workstream": "creator-portal",
+      "description": "White-label portal per brand where creators see their active briefs, submit content, track payment status, and communicate with the brand. DietFit team already drowning in manual creator questions — this portal addresses that directly.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": [
+        "creator-backend-infra",
+        "brief-builder",
+        "content-collection",
+        "mass-payments",
+        "onboarding-flow"
+      ],
+      "dependents": ["creator-earnings-dashboard"],
+      "sub_features": [
+        {
+          "id": "branded-creator-hub-brief-view",
+          "name": "Creator Brief View",
+          "description": "Creator-facing view of all active briefs assigned to them, with status, deadline, and submission controls",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["brief-builder-send", "onboarding-flow-signup"],
+          "acceptance_criteria": [
+            "Creator logs in (magic link) and sees all their active briefs listed with: brand name, brief title, deadline, payment amount, submission status",
+            "Clicking a brief shows full brief details (same content brand created) plus upload interface",
+            "Deadline countdown is visible: '5 days remaining'",
+            "Completed briefs (approved/paid) are shown in a separate 'Completed' tab",
+            "Creator can see how many of their submissions are currently under review without emailing the brand"
+          ],
+          "technical_notes": "Magic link authentication is critical — creators will not maintain a username/password for a tool they use infrequently.",
+          "effort_estimate": null
+        },
+        {
+          "id": "branded-creator-hub-payment-status",
+          "name": "Payment Status View",
+          "description": "Creator sees which submissions are approved and awaiting payment, and when payments were processed",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["mass-payments", "branded-creator-hub-brief-view"],
+          "acceptance_criteria": [
+            "Payment status shows for each approved submission: 'Approved — payment processing' or 'Paid on [date] — $50'",
+            "Creator can see total earnings from the current brand (all time and current period)",
+            "If payment is delayed more than 7 days after approval, creator sees a note: 'Payment is being processed — contact support if not received by [date]'",
+            "Creator can download a basic earnings summary for their records (CSV or PDF)"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Should this be a Pynch-branded portal (creators know it's Pynch) or white-labeled per brand (DietFit portal, not Pynch portal)?",
+        "Mobile app vs. mobile-responsive web? Creators are mobile-first."
+      ],
+      "notes": "Not MVP but immediately after — Neel confirmed this is MLP territory. DietFit team is literally drowning in creator questions about process, payments, and status. This portal eliminates that support overhead.",
+      "connected_features": ["content-collection", "mass-payments", "creator-earnings-dashboard"],
+      "user_stories": [
+        "As a creator working with DietFit, I want to check the status of my submitted video without having to send an Instagram DM asking 'did you receive it?'",
+        "As a DietFit brand manager, I want creators to stop DMing me asking when they'll get paid — the portal answers that automatically",
+        "As a creator, I want to see all my active briefs in one place on my phone without using a desktop"
+      ]
+    },
+    {
+      "id": "creator-earnings-dashboard",
+      "name": "Creator Earnings Dashboard",
+      "workstream": "creator-portal",
+      "description": "Detailed earnings view for creators: pending payments, payment history, upcoming briefs with payment amounts. Transparency drives creator retention and reduces payment anxiety.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["branded-creator-hub", "mass-payments", "payment-tracking"],
+      "dependents": [],
+      "sub_features": [],
+      "open_questions": [
+        "Do we need tax documentation features (1099 for US creators, equivalent for other countries)?",
+        "What currencies do we need to display? USD primarily, but creators in Japan/EU will want local equivalents."
+      ],
+      "notes": "Builds on the basic payment status in Branded Creator Hub. A more comprehensive earnings view becomes important when creators are doing multiple campaigns and need to track their income seriously.",
+      "connected_features": ["branded-creator-hub", "mass-payments"],
+      "user_stories": [
+        "As a creator doing 10 campaigns a month across multiple brands on Pynch, I want to see my total earnings this month and which payments are still pending",
+        "As a creator, I want to download my earnings history for tax purposes at the end of the year"
+      ]
+    },
+    {
+      "id": "creator-portfolio-profile",
+      "name": "Creator Portfolio & Profile",
+      "workstream": "creator-portal",
+      "description": "Public-facing creator profile with best work, live platform data, and Pynch branding. THE PLG growth play: creator signs up free, Pynch builds their portfolio automatically, creator shares it with brands, every portfolio page is a Pynch ad.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["creator-profiles", "creator-discovery"],
+      "dependents": ["inbound-creator-applications"],
+      "sub_features": [
+        {
+          "id": "creator-portfolio-profile-auto-build",
+          "name": "Auto-Generated Portfolio",
+          "description": "Pynch automatically scrapes creator's public content and builds a live-updating portfolio page. Zero effort from creator.",
+          "tier": "future",
+          "status": "idea",
+          "dependencies": ["creator-profiles-platform-stats"],
+          "acceptance_criteria": [
+            "Creator signs up free and receives a portfolio URL (pynch.gg/[handle] or similar) within 24 hours",
+            "Portfolio page auto-populates with: best posts (by engagement), follower counts, engagement rate, niche tags, platforms",
+            "Portfolio data updates weekly — no manual update needed from creator",
+            "Portfolio page loads in under 2 seconds and looks great on mobile",
+            "Pynch logo and 'powered by Pynch' is visible but tasteful — not obnoxious",
+            "Creator can customize their display name and bio; cannot remove Pynch branding (on free tier)"
+          ],
+          "technical_notes": "This is better than Canva because it's LIVE data, not a static PDF. Zero effort from creator. The differentiation is the automatic scraping + updating.",
+          "effort_estimate": null
+        },
+        {
+          "id": "creator-portfolio-profile-affiliate",
+          "name": "Brand Referral & Affiliate",
+          "description": "Creators who share their portfolio and generate brand sign-ups on Pynch earn a referral commission. Makes creators active Pynch salespeople.",
+          "tier": "future",
+          "status": "idea",
+          "dependencies": ["creator-portfolio-profile-auto-build"],
+          "acceptance_criteria": [
+            "Each portfolio page has a unique referral link for the creator",
+            "When a brand signs up via a creator's portfolio referral link, the creator is attributed",
+            "Creators receive a commission for referred brands who complete their first paid campaign (amount TBD)",
+            "Creator can see their referral count and pending commission in their portal",
+            "Referral attribution window is 30 days (if brand signs up within 30 days of clicking, creator is credited)"
+          ],
+          "technical_notes": "Standard affiliate tracking. UTM parameters or unique referral codes. Need legal review on commission structure.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Is this a standalone free product or only for creators who join via a brand campaign?",
+        "When to build this? It's a separate go-to-market motion — could be built alongside the core product or as a separate launch.",
+        "Pricing: Pynch branding removed on paid tier? Creator pays or brand pays?"
+      ],
+      "notes": "The PLG growth play Neel is most excited about. Strategy: creator portfolio drives brand discovery, creator becomes an affiliate, brands sign up through creator portfolios. Every portfolio is a free Pynch ad. 'Better than Canva because it's real data, live-updating, zero effort.'",
+      "connected_features": ["creator-profiles", "inbound-creator-applications"],
+      "user_stories": [
+        "As a UGC creator, I want a beautiful public portfolio page that updates automatically so I can share it when brands reach out to me on Instagram",
+        "As a DietFit creator, I want to share my Pynch portfolio link in my Instagram bio so brands can see my stats without me making a manual portfolio",
+        "As Pynch, I want every creator's portfolio page to be a top-of-funnel acquisition channel for new brands discovering the platform"
+      ]
+    },
+    {
+      "id": "mass-payments",
+      "name": "Mass Payments",
+      "workstream": "payments-operations",
+      "description": "Pay 50+ creators in a single batch after content is approved. USD first, multi-currency later. Configurable on who bears FX fees. One of the most operationally complex features.",
+      "status": "building",
+      "tier": "mvp",
+      "owner": null,
+      "dependencies": ["creator-backend-infra", "onboarding-flow"],
+      "dependents": [
+        "payment-tracking",
+        "branded-creator-hub",
+        "creator-earnings-dashboard",
+        "performance-tracking"
+      ],
+      "sub_features": [
+        {
+          "id": "mass-payments-batch-send",
+          "name": "Batch Payment Send",
+          "description": "Brand triggers a payment batch for all approved submissions in a campaign. System processes payments to each creator's PayPal.",
+          "tier": "mvp",
+          "status": "building",
+          "dependencies": ["content-collection-status-tracking", "creator-backend-infra-data-model"],
+          "acceptance_criteria": [
+            "Brand selects a campaign and sees all approved submissions with creator name, payment amount, and creator payment handle (PayPal email)",
+            "Brand can deselect individual creators from the batch (e.g., to exclude one pending dispute)",
+            "Batch summary shows: total creators, total amount in USD, estimated fees",
+            "Brand confirms the batch with one click — a second confirmation dialog shows the final total before charging",
+            "Payment batch processes within 24 hours of confirmation",
+            "Each creator receives an email notification when their payment is sent: 'Your payment of $50 for [campaign] has been sent to your PayPal'",
+            "Brand receives a batch completion receipt: 'Paid 28 of 30 creators — 2 failed (see details)'"
+          ],
+          "technical_notes": "PayPal Mass Pay API is the most straightforward for USD batch payments. Wise Business is a strong alternative for international creators with lower FX fees. Decide on the PSP (payment service provider) model before building — option 3 from the brief (PSP in the middle) is the right call for now.",
+          "effort_estimate": null
+        },
+        {
+          "id": "mass-payments-fx-configuration",
+          "name": "FX Fee Configuration",
+          "description": "Configurable setting for who bears the international FX conversion fees — brand or creator",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["mass-payments-batch-send"],
+          "acceptance_criteria": [
+            "Brand settings include a payment fee model option: 'Fees deducted from creator payment' or 'Brand covers all fees'",
+            "Before batch confirmation, fee model is shown clearly: 'With current settings, each creator will receive $48.50 after fees ($1.50 FX fee deducted)'",
+            "Fee model can be changed per-campaign at the time of payment confirmation",
+            "Audit log shows which fee model was applied to each batch payment"
+          ],
+          "technical_notes": "FX fees vary by creator country and payment provider. Display estimated fees, not exact fees, since exchange rates fluctuate.",
+          "effort_estimate": null
+        },
+        {
+          "id": "mass-payments-failure-handling",
+          "name": "Payment Failure Handling",
+          "description": "Gracefully handle individual payment failures (wrong PayPal email, account issues) without failing the entire batch",
+          "tier": "mvp",
+          "status": "planned",
+          "dependencies": ["mass-payments-batch-send"],
+          "acceptance_criteria": [
+            "If one creator's payment fails, the rest of the batch continues — not blocked by the single failure",
+            "Failed payments are listed in the batch completion report with the reason (invalid PayPal email, account restriction, etc.)",
+            "Failed creator receives an email: 'We tried to send your payment but encountered an issue. Please update your payment details.'",
+            "Brand can manually retry individual failed payments without reprocessing the full batch",
+            "Failed payment retry does not double-pay — system tracks payment state per creator per campaign"
+          ],
+          "technical_notes": "Idempotency keys on payment API calls are critical to prevent double payments on retry. Non-negotiable.",
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Buy vs. build the payments infrastructure? Platforms exist (Tipalti, Trolley) that do exactly this.",
+        "PayPal Mass Pay vs. Wise vs. Tipalti — need cost comparison at 50, 200, and 1000 creators/month.",
+        "Payment flow model: brand pays Pynch → Pynch pays creators (holds float, EU/JP compliance risk) vs. PSP in the middle (most likely right answer for now).",
+        "Do we need to handle non-PayPal payment methods for creators in markets where PayPal is not common (e.g., Japan)?"
+      ],
+      "notes": "USD first, multi-currency as MLP. Must account for non-US creators receiving USD (FX fees). Idempotency is critical to prevent double payments on failure retries.",
+      "connected_features": ["payment-tracking", "branded-creator-hub"],
+      "user_stories": [
+        "As a DietFit brand manager, I want to pay all 30 creators who submitted approved videos this week in one action, not 30 separate PayPal transfers",
+        "As a creator in Japan, I want to receive my $50 USD payment in my PayPal account without being surprised by fees I didn't know about",
+        "As a brand, I want to know immediately when a payment fails so I can fix the creator's payment details without the creator having to chase me"
+      ]
+    },
+    {
+      "id": "payment-tracking",
+      "name": "Payment Tracking",
+      "workstream": "payments-operations",
+      "description": "Per-creator payment history, cost-per-video tracking, budget monitoring, and payment schedule visibility. Gives brand finance teams the data they need.",
+      "status": "planned",
+      "tier": "mlp",
+      "owner": null,
+      "dependencies": ["mass-payments", "analytics-infra"],
+      "dependents": ["creator-earnings-dashboard", "performance-tracking"],
+      "sub_features": [
+        {
+          "id": "payment-tracking-history",
+          "name": "Payment History",
+          "description": "Complete log of all payments sent by a brand, searchable and filterable by creator, campaign, and date",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["mass-payments-batch-send"],
+          "acceptance_criteria": [
+            "Payment history table shows: creator name, campaign, payment amount, fee charged, net received, sent date, status (sent/failed/pending)",
+            "Table is filterable by: creator name, campaign, date range, status",
+            "Total spend for a selected date range is shown as a summary: 'Total paid: $4,200 across 84 creators (Jan 2026)'",
+            "Individual payment records are expandable to show full transaction details",
+            "Export to CSV available for accounting/reconciliation"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        },
+        {
+          "id": "payment-tracking-budget",
+          "name": "Campaign Budget Tracking",
+          "description": "Track spend vs. budget per campaign. Alert when budget is 80% consumed.",
+          "tier": "mlp",
+          "status": "planned",
+          "dependencies": ["payment-tracking-history"],
+          "acceptance_criteria": [
+            "Brand can set a budget for each campaign (total USD)",
+            "Dashboard shows budget consumed vs. remaining for each active campaign",
+            "Email alert sent to brand admin when campaign reaches 80% of budget",
+            "Budget tracking includes: pending approvals (cost if approved) + paid amounts",
+            "Brand can increase campaign budget without restarting the campaign"
+          ],
+          "technical_notes": null,
+          "effort_estimate": null
+        }
+      ],
+      "open_questions": [
+        "Do brands need invoice generation from Pynch for their accounting? Or is CSV export sufficient?",
+        "Multi-currency display: should amounts be shown in local currency or always USD?"
+      ],
+      "notes": "Connects to performance tracking — cost-per-approved-video is the key metric brands want to optimize. Build with that metric as a first-class output.",
+      "connected_features": ["mass-payments", "performance-tracking"],
+      "user_stories": [
+        "As a DietFit finance manager, I want to download a CSV of all creator payments in Q1 for our accounting reconciliation",
+        "As a brand, I want to be alerted when I've spent 80% of my campaign budget so I don't accidentally overpay",
+        "As a brand, I want to see my average cost per approved video this month so I know if the campaign is tracking to plan"
+      ]
+    },
+    {
+      "id": "contracts-agreements",
+      "name": "Contracts & Agreements",
+      "workstream": "payments-operations",
+      "description": "Auto-generated creator agreements for standard $50/video engagements. Bespoke contracts only for high-value campaign creators. Don't over-engineer for the core use case.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["onboarding-flow"],
+      "dependents": [],
+      "sub_features": [],
+      "open_questions": [
+        "Is click-to-agree (already in onboarding) sufficient legal coverage for $50/video creators? Likely yes.",
+        "At what payment threshold do bespoke contracts become necessary? $500/video? $2000/campaign?",
+        "What jurisdiction governs these contracts? Brand's country, creator's country, or Pynch's?"
+      ],
+      "notes": "Click-to-agree during onboarding is sufficient for $50/video creators and is already planned. Bespoke contracts for high-value Campaign Mode creators only. Future tier — don't build until Campaign Mode is real.",
+      "connected_features": ["campaign-mode", "onboarding-flow"],
+      "user_stories": [
+        "As a brand running a Campaign Mode engagement with a macro-influencer at $2,000, I want a proper contract rather than a click-to-agree checkbox"
+      ]
+    },
+    {
+      "id": "invoice-generation",
+      "name": "Invoice Generation",
+      "workstream": "payments-operations",
+      "description": "Automated invoicing for brands and/or creators. Three payment flow models to choose between. Most likely answer: use a PSP. Don't build this until the payment model is decided.",
+      "status": "idea",
+      "tier": "future",
+      "owner": null,
+      "dependencies": ["mass-payments", "payment-tracking"],
+      "dependents": [],
+      "sub_features": [],
+      "open_questions": [
+        "Which payment flow model? (1) Brand pays Pynch, Pynch pays creators (float risk, EU money services compliance); (2) Back-to-back invoicing; (3) PSP in the middle. Option 3 is most likely right.",
+        "If using a PSP: Tipalti, Trolley, or Deel? Need cost comparison.",
+        "Does 'invoice generation' mean Pynch issues invoices TO brands, or Pynch generates invoices FROM creators? Or both?"
+      ],
+      "notes": "The payment flow model decision must be made before building this. Option 3 (PSP in the middle) avoids Pynch holding funds and the associated financial regulatory risk. Park until payment flow model is confirmed.",
+      "connected_features": ["mass-payments", "contracts-agreements"],
+      "user_stories": [
+        "As a brand's finance team, I want to receive a Pynch invoice at the start of each month for the prior month's creator payments so I can process it in our AP system",
+        "As a creator in the EU, I want to receive a proper invoice for my payments for my own tax records"
+      ]
+    }
+  ]
+}
