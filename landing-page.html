@@ -71,6 +71,13 @@
     ═══════════════════════════════════════════════════════ */
     #smooth-wrapper{overflow:hidden;}
     #smooth-content{will-change:transform;position:relative;z-index:1;}
+    /* Mobile fix: ScrollSmoother is disabled on mobile but will-change:transform
+       creates a containing block that breaks position:fixed on GSAP pins.
+       overflow:hidden clips content displaced by pin spacers. */
+    @media(max-width:768px){
+      #smooth-wrapper{overflow-x:hidden;overflow-y:visible;}
+      #smooth-content{will-change:auto;}
+    }
 
     /* ═══════════════════════════════════════════════════════
        BUTTONS
@@ -2416,6 +2423,9 @@ void main(){
 
     window.addEventListener('load', () => {
       initHz();
+      // Refresh ScrollTrigger after initHz() so downstream pins recalculate
+      // positions after the timeline pin spacer is in the DOM.
+      ScrollTrigger.refresh();
       let hzResizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(hzResizeTimer);
