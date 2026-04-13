@@ -285,15 +285,34 @@
     font-size: 10px; color: #282830; text-align: center;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 767px) {
     body { padding: 14px 12px; }
     .header h1 { font-size: 22px; }
-    .swimlane { padding: 14px 12px; }
+    #board {
+      gap:15px;
+    }
+    .oq-section {
+      margin-top: 15px;
+      padding: 15px 10px;
+    }
+    .swimlane { padding: 5px 12px; }
+    .swimlane-header{margin-bottom: 8px;}
     .swimlane-subtitle { display: none; }
     .card { flex: 1 1 calc(50% - 5px); min-width: 120px; }
     .card.expanded { flex: 1 1 100%; }
     .detail-grid { grid-template-columns: 1fr; }
     .legend-sep { display: none; }
+    .header-hint {padding : 6px 1px;gap: 5px;font-size: 12px;display: flex;flex-direction: column; }
+    .header-hint em{
+      margin-right: 3px;
+    }
+    .legend{
+      margin-bottom: 15px;
+    }
+    .page-footer{
+      margin-top: 20px;
+      
+    }
   }
   @media (max-width: 360px) {
     .card { flex: 1 1 100%; }
@@ -309,9 +328,9 @@
     Source: Vision Doc v4 + Neel/Khoa sync + Yukihama research &middot; 7 workstreams &middot; 24 features
   </p>
   <div class="header-hint">
-    <em>▼</em> Click card to expand &nbsp;&middot;&nbsp;
-    <em>●</em> Tap tier + status badges to reassign &nbsp;&middot;&nbsp;
-    <em>◆</em> Sub-features have their own tier badges &nbsp;&middot;&nbsp; all saves in browser
+    <p><em>▼</em> Click card to expand &nbsp;&middot;&nbsp;</p>
+    <p><em>●</em> Tap tier + status badges to reassign &nbsp;&middot;&nbsp;</p>
+    <p><em>◆</em> Sub-features have their own tier badges &nbsp;&middot;&nbsp; all saves in browser</p>
   </div>
 </div>
 

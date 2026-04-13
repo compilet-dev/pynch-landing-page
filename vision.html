@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +9,9 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Righteous&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Righteous&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/style.min.css" />
 
   <!-- GSAP -->
@@ -20,39 +23,49 @@
        TOKENS
     ══════════════════════════════════ */
     :root {
-      --cream:     #FAF8F5;
-      --grey-bg:   #dadee1;
-      --dark-bg:   #0a0a14;
+      --cream: #FAF8F5;
+      --grey-bg: #dadee1;
+      --dark-bg: #0a0a14;
       --darker-bg: #161616;
-      --coral:     #FF4D5A;
-      --coral-d:   #E83344;
-      --teal:      #00D4AA;
-      --purple:    #7B50C8;
-      --blue:      #3E89FF;
-      --amber:     #FFB800;
-      --ink:       #131322;
-      --mid:       #555570;
-      --border:    #E2DFDA;
+      --coral: #FF4D5A;
+      --coral-d: #E83344;
+      --teal: #00D4AA;
+      --purple: #7B50C8;
+      --blue: #3E89FF;
+      --amber: #FFB800;
+      --ink: #131322;
+      --mid: #555570;
+      --border: #E2DFDA;
 
-      --text-100:  rgba(255,255,255,1.0);
-      --text-70:   rgba(255,255,255,0.7);
-      --text-50:   rgba(255,255,255,0.5);
-      --text-30:   rgba(255,255,255,0.3);
+      --text-100: rgba(255, 255, 255, 1.0);
+      --text-70: rgba(255, 255, 255, 0.7);
+      --text-50: rgba(255, 255, 255, 0.5);
+      --text-30: rgba(255, 255, 255, 0.3);
 
-      --font:      'Plus Jakarta Sans', sans-serif;
-      --mono:      'Geist Mono', monospace;
+      --font: 'Plus Jakarta Sans', sans-serif;
+      --mono: 'Geist Mono', monospace;
       --logo-font: 'Righteous', sans-serif;
 
-      --glass-bg:     rgba(255,255,255,0.06);
-      --glass-border: rgba(255,255,255,0.14);
-      --glass-shadow: 0 24px 60px rgba(0,0,0,0.24), 0 4px 12px rgba(0,0,0,0.12);
+      --glass-bg: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --glass-shadow: 0 24px 60px rgba(0, 0, 0, 0.24), 0 4px 12px rgba(0, 0, 0, 0.12);
     }
 
     /* ══════════════════════════════════
        RESET + BASE
     ══════════════════════════════════ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: var(--font);
       background: var(--dark-bg);
@@ -60,8 +73,16 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     .container {
       max-width: 1080px;
@@ -81,10 +102,26 @@
       margin-bottom: 1.25rem;
       opacity: 0.6;
     }
-    .label.coral  { color: var(--coral); opacity: 1; }
-    .label.teal   { color: var(--teal); opacity: 1; }
-    .label.purple { color: var(--purple); opacity: 1; }
-    .label.amber  { color: var(--amber); opacity: 1; }
+
+    .label.coral {
+      color: var(--coral);
+      opacity: 1;
+    }
+
+    .label.teal {
+      color: var(--teal);
+      opacity: 1;
+    }
+
+    .label.purple {
+      color: var(--purple);
+      opacity: 1;
+    }
+
+    .label.amber {
+      color: var(--amber);
+      opacity: 1;
+    }
 
     .heading-xl {
       font-size: clamp(2.5rem, 5.5vw, 4rem);
@@ -92,23 +129,27 @@
       letter-spacing: -0.04em;
       line-height: 1.05;
     }
+
     .heading-lg {
       font-size: clamp(1.8rem, 3.5vw, 2.75rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.1;
     }
+
     .heading-md {
       font-size: clamp(1.3rem, 2.5vw, 1.875rem);
       font-weight: 700;
       letter-spacing: -0.025em;
       line-height: 1.2;
     }
+
     .body-lg {
       font-size: 1.0625rem;
       line-height: 1.72;
       font-weight: 400;
     }
+
     .body-md {
       font-size: 0.9375rem;
       line-height: 1.65;
@@ -128,28 +169,30 @@
       overflow: hidden;
       background: var(--dark-bg);
     }
+
     #gradientCanvas {
       position: absolute;
       inset: 0;
       z-index: 0;
     }
+
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(10,10,20,0.18) 0%,
-        rgba(10,10,20,0.04) 40%,
-        rgba(10,10,20,0.32) 100%
-      );
+      background: linear-gradient(to bottom,
+          rgba(10, 10, 20, 0.18) 0%,
+          rgba(10, 10, 20, 0.04) 40%,
+          rgba(10, 10, 20, 0.32) 100%);
       z-index: 1;
     }
+
     .hero-content {
       position: relative;
       z-index: 2;
       max-width: 780px;
       padding: 0 2rem;
     }
+
     .hero-logo {
       margin: 0 auto 2.5rem;
       width: 100%;
@@ -157,11 +200,13 @@
       opacity: 0;
       transform: translateY(12px);
     }
+
     .hero-logo img {
       display: inline-block;
       height: 36px;
       width: auto;
     }
+
     .hero-eyebrow {
       font-size: 0.72rem;
       font-weight: 700;
@@ -172,6 +217,7 @@
       opacity: 0;
       transform: translateY(16px);
     }
+
     .hero-headline {
       font-size: clamp(3rem, 7vw, 5.25rem);
       font-weight: 800;
@@ -182,10 +228,12 @@
       opacity: 0;
       transform: translateY(20px);
     }
+
     .hero-headline em {
       font-style: normal;
       color: var(--coral);
     }
+
     .hero-sub {
       font-size: clamp(1rem, 2vw, 1.1875rem);
       line-height: 1.65;
@@ -195,6 +243,7 @@
       opacity: 0;
       transform: translateY(16px);
     }
+
     .hero-cta {
       display: inline-flex;
       align-items: center;
@@ -207,15 +256,17 @@
       border-radius: 100px;
       cursor: pointer;
       border: none;
-      box-shadow: 0 12px 36px rgba(255,77,90,0.35);
+      box-shadow: 0 12px 36px rgba(255, 77, 90, 0.35);
       transition: transform 0.2s, box-shadow 0.2s;
       opacity: 0;
       transform: translateY(16px);
     }
+
     .hero-cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 16px 48px rgba(255,77,90,0.45);
+      box-shadow: 0 16px 48px rgba(255, 77, 90, 0.45);
     }
+
     .hero-scroll-hint {
       position: absolute;
       bottom: 2.5rem;
@@ -231,15 +282,24 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
+
     .scroll-line {
       width: 1px;
       height: 36px;
       background: linear-gradient(to bottom, transparent, var(--text-30));
       animation: scrollPulse 2s ease-in-out infinite;
     }
+
     @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.8; }
+
+      0%,
+      100% {
+        opacity: 0.3;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
     }
 
     /* ══════════════════════════════════
@@ -250,15 +310,28 @@
       padding: 120px 0 100px;
       overflow: hidden;
     }
+
     .problem-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
     }
-    .problem-text .label { color: var(--coral); }
-    .problem-text .heading-lg { color: var(--ink); margin-bottom: 1.5rem; }
-    .problem-text .body-lg { color: var(--mid); margin-bottom: 1.5rem; }
+
+    .problem-text .label {
+      color: var(--coral);
+    }
+
+    .problem-text .heading-lg {
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    .problem-text .body-lg {
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+
     .problem-quote {
       background: var(--ink);
       color: var(--text-100);
@@ -269,7 +342,10 @@
       font-size: 0.85rem;
       line-height: 1.6;
     }
-    .problem-quote .stat-line { color: var(--teal); }
+
+    .problem-quote .stat-line {
+      color: var(--teal);
+    }
 
     /* Funnel */
     .funnel-wrap {
@@ -279,6 +355,7 @@
       gap: 0;
       position: relative;
     }
+
     .funnel-step {
       width: 100%;
       display: flex;
@@ -286,6 +363,7 @@
       flex-direction: column;
       position: relative;
     }
+
     .funnel-bar {
       height: 60px;
       background: var(--coral);
@@ -296,6 +374,7 @@
       position: relative;
       transition: none;
     }
+
     .funnel-bar-label {
       font-weight: 700;
       font-size: 1rem;
@@ -303,6 +382,7 @@
       white-space: nowrap;
       z-index: 1;
     }
+
     .funnel-bar-num {
       position: absolute;
       right: -3.5rem;
@@ -311,14 +391,24 @@
       font-weight: 700;
       color: var(--coral);
     }
+
     .funnel-connector {
       width: 2px;
       height: 20px;
       background: linear-gradient(to bottom, var(--coral), var(--teal));
     }
-    .funnel-step:nth-child(2) .funnel-bar { background: color-mix(in srgb, var(--coral) 70%, var(--purple)); }
-    .funnel-step:nth-child(3) .funnel-bar { background: var(--teal); }
-    .funnel-step:nth-child(3) .funnel-bar-num { color: var(--teal); }
+
+    .funnel-step:nth-child(2) .funnel-bar {
+      background: color-mix(in srgb, var(--coral) 70%, var(--purple));
+    }
+
+    .funnel-step:nth-child(3) .funnel-bar {
+      background: var(--teal);
+    }
+
+    .funnel-step:nth-child(3) .funnel-bar-num {
+      color: var(--teal);
+    }
 
     /* ══════════════════════════════════
        WHAT WE'RE HEARING — Screenshot Carousel
@@ -326,9 +416,11 @@
     .hearing-section {
       margin: 4rem 0 0;
     }
+
     .hearing-label {
       margin-bottom: 1.5rem;
     }
+
     .hearing-carousel {
       display: flex;
       gap: 1.25rem;
@@ -338,18 +430,25 @@
       padding-bottom: 1rem;
       cursor: grab;
     }
-    .hearing-carousel:active { cursor: grabbing; }
+
+    .hearing-carousel:active {
+      cursor: grabbing;
+    }
+
     .hearing-carousel::-webkit-scrollbar {
       height: 4px;
     }
+
     .hearing-carousel::-webkit-scrollbar-track {
-      background: rgba(0,0,0,0.08);
+      background: rgba(0, 0, 0, 0.08);
       border-radius: 2px;
     }
+
     .hearing-carousel::-webkit-scrollbar-thumb {
       background: var(--coral);
       border-radius: 2px;
     }
+
     .hearing-card {
       flex: 0 0 280px;
       scroll-snap-align: start;
@@ -359,12 +458,14 @@
       cursor: pointer;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       border: 1px solid var(--border);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
+
     .hearing-card:hover {
       transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
     }
+
     .hearing-card-img {
       width: 100%;
       height: 180px;
@@ -374,9 +475,11 @@
       filter: blur(1px) brightness(0.55);
       transition: filter 0.3s ease;
     }
+
     .hearing-card:hover .hearing-card-img {
       filter: blur(0px) brightness(0.45);
     }
+
     .hearing-card-overlay {
       position: absolute;
       inset: 0;
@@ -384,13 +487,12 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.1) 0%,
-        rgba(10,10,20,0.75) 60%,
-        rgba(10,10,20,0.92) 100%
-      );
+      background: linear-gradient(to bottom,
+          rgba(0, 0, 0, 0.1) 0%,
+          rgba(10, 10, 20, 0.75) 60%,
+          rgba(10, 10, 20, 0.92) 100%);
     }
+
     .hearing-source-tag {
       font-size: 0.6rem;
       font-weight: 700;
@@ -400,6 +502,7 @@
       margin-bottom: 0.5rem;
       opacity: 0.9;
     }
+
     .hearing-quote {
       font-size: 0.82rem;
       font-weight: 600;
@@ -407,15 +510,21 @@
       color: #fff;
       font-style: italic;
     }
-    .hearing-quote::before { content: '\201C'; }
-    .hearing-quote::after  { content: '\201D'; }
+
+    .hearing-quote::before {
+      content: '\201C';
+    }
+
+    .hearing-quote::after {
+      content: '\201D';
+    }
 
     /* Lightbox */
     .lightbox-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(10,10,20,0.92);
+      background: rgba(10, 10, 20, 0.92);
       z-index: 9999;
       align-items: center;
       justify-content: center;
@@ -423,14 +532,19 @@
       cursor: zoom-out;
       backdrop-filter: blur(8px);
     }
-    .lightbox-overlay.active { display: flex; }
+
+    .lightbox-overlay.active {
+      display: flex;
+    }
+
     .lightbox-img {
       max-width: 90vw;
       max-height: 85vh;
       border-radius: 12px;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
       object-fit: contain;
     }
+
     .lightbox-close {
       position: fixed;
       top: 1.5rem;
@@ -438,8 +552,8 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
       font-size: 1.2rem;
       cursor: pointer;
@@ -448,7 +562,10 @@
       justify-content: center;
       transition: background 0.2s;
     }
-    .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
 
     /* ══════════════════════════════════
        3. THE MARKET (dark)
@@ -458,13 +575,26 @@
       padding: 120px 0;
       overflow: hidden;
     }
+
     .market-header {
       text-align: center;
       margin-bottom: 5rem;
     }
-    .market-header .label { color: var(--teal); }
-    .market-header .heading-lg { color: var(--text-100); margin-bottom: 1rem; }
-    .market-header .body-lg { color: var(--text-70); max-width: 560px; margin: 0 auto; }
+
+    .market-header .label {
+      color: var(--teal);
+    }
+
+    .market-header .heading-lg {
+      color: var(--text-100);
+      margin-bottom: 1rem;
+    }
+
+    .market-header .body-lg {
+      color: var(--text-70);
+      max-width: 560px;
+      margin: 0 auto;
+    }
 
     .market-stats {
       display: grid;
@@ -472,6 +602,7 @@
       gap: 2rem;
       margin-bottom: 4rem;
     }
+
     .stat-card {
       background: var(--glass-bg);
       backdrop-filter: blur(20px) saturate(180%);
@@ -481,6 +612,7 @@
       padding: 2rem;
       text-align: center;
     }
+
     .stat-number {
       font-size: clamp(2.5rem, 4vw, 3.5rem);
       font-weight: 800;
@@ -489,7 +621,11 @@
       line-height: 1;
       margin-bottom: 0.5rem;
     }
-    .stat-number span.accent { color: var(--teal); }
+
+    .stat-number span.accent {
+      color: var(--teal);
+    }
+
     .stat-label {
       font-size: 0.85rem;
       color: var(--text-50);
@@ -501,6 +637,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1.25rem;
     }
+
     .comp-card {
       background: var(--glass-bg);
       backdrop-filter: blur(20px) saturate(180%);
@@ -509,17 +646,20 @@
       border-radius: 16px;
       padding: 1.5rem 1.25rem;
     }
+
     .comp-card.pynch-card {
       border-color: var(--teal);
-      background: rgba(0,212,170,0.07);
+      background: rgba(0, 212, 170, 0.07);
       position: relative;
     }
+
     .comp-name {
       font-weight: 700;
       font-size: 0.9rem;
       color: var(--text-100);
       margin-bottom: 0.5rem;
     }
+
     .comp-price {
       font-family: var(--mono);
       font-size: 1.2rem;
@@ -527,12 +667,17 @@
       color: var(--coral);
       margin-bottom: 0.5rem;
     }
-    .comp-card.pynch-card .comp-price { color: var(--teal); }
+
+    .comp-card.pynch-card .comp-price {
+      color: var(--teal);
+    }
+
     .comp-desc {
       font-size: 0.78rem;
       color: var(--text-50);
       line-height: 1.55;
     }
+
     .pynch-badge {
       position: absolute;
       top: -12px;
@@ -554,27 +699,42 @@
       background: var(--cream);
       position: relative;
     }
+
     .phases-sticky-outer {
       position: relative;
     }
+
     .phases-pin-wrap {
       display: flex;
       align-items: flex-start;
       gap: 4rem;
     }
+
     .phases-left {
       width: 340px;
       flex-shrink: 0;
     }
-    .phases-left .label { color: var(--purple); }
-    .phases-left .heading-lg { color: var(--ink); margin-bottom: 1rem; }
-    .phases-left .body-lg { color: var(--mid); }
+
+    .phases-left .label {
+      color: var(--purple);
+    }
+
+    .phases-left .heading-lg {
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .phases-left .body-lg {
+      color: var(--mid);
+    }
+
     .phases-progress {
       margin-top: 2.5rem;
       display: flex;
       flex-direction: column;
       gap: 0;
     }
+
     .phase-indicator {
       display: flex;
       align-items: center;
@@ -584,7 +744,11 @@
       opacity: 0.3;
       transition: opacity 0.4s;
     }
-    .phase-indicator.active { opacity: 1; }
+
+    .phase-indicator.active {
+      opacity: 1;
+    }
+
     .phase-dot {
       width: 10px;
       height: 10px;
@@ -593,10 +757,12 @@
       flex-shrink: 0;
       transition: background 0.4s, transform 0.3s;
     }
+
     .phase-indicator.active .phase-dot {
       background: var(--purple);
       transform: scale(1.4);
     }
+
     .phase-indicator-label {
       font-size: 0.85rem;
       font-weight: 600;
@@ -608,6 +774,7 @@
       position: relative;
       min-height: 500px;
     }
+
     .phase-panel {
       position: absolute;
       inset: 0;
@@ -616,11 +783,13 @@
       transition: opacity 0.5s, transform 0.5s;
       pointer-events: none;
     }
+
     .phase-panel.active {
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
     }
+
     .phase-card {
       background: var(--ink);
       border-radius: 24px;
@@ -633,6 +802,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .phase-card::before {
       content: '';
       position: absolute;
@@ -644,6 +814,7 @@
       opacity: 0.06;
       background: var(--phase-color, var(--purple));
     }
+
     .phase-tag {
       display: inline-flex;
       align-items: center;
@@ -653,20 +824,29 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--phase-color, var(--purple));
-      background: rgba(123,80,200,0.12);
-      border: 1px solid rgba(123,80,200,0.25);
+      background: rgba(123, 80, 200, 0.12);
+      border: 1px solid rgba(123, 80, 200, 0.25);
       padding: 4px 12px;
       border-radius: 100px;
       margin-bottom: 1.5rem;
     }
-    .phase-card .heading-md { color: var(--text-100); margin-bottom: 1rem; }
-    .phase-card .body-md { color: var(--text-70); }
+
+    .phase-card .heading-md {
+      color: var(--text-100);
+      margin-bottom: 1rem;
+    }
+
+    .phase-card .body-md {
+      color: var(--text-70);
+    }
+
     .phase-features {
       margin-top: 2rem;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
     }
+
     .phase-feat {
       display: flex;
       align-items: flex-start;
@@ -674,6 +854,7 @@
       font-size: 0.875rem;
       color: var(--text-70);
     }
+
     .phase-feat::before {
       content: '→';
       color: var(--phase-color, var(--purple));
@@ -681,11 +862,12 @@
       margin-top: 0.05em;
       font-weight: 700;
     }
+
     .phase-number {
       font-family: var(--mono);
       font-size: 5rem;
       font-weight: 700;
-      color: rgba(255,255,255,0.04);
+      color: rgba(255, 255, 255, 0.04);
       position: absolute;
       bottom: 1.5rem;
       right: 2rem;
@@ -699,28 +881,40 @@
       background: var(--dark-bg);
       padding: 120px 0;
     }
+
     .roadmap-header {
       margin-bottom: 4rem;
     }
-    .roadmap-header .label { color: var(--amber); }
-    .roadmap-header .heading-lg { color: var(--text-100); margin-bottom: 0.75rem; }
+
+    .roadmap-header .label {
+      color: var(--amber);
+    }
+
+    .roadmap-header .heading-lg {
+      color: var(--text-100);
+      margin-bottom: 0.75rem;
+    }
+
     .roadmap-cols {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
+
     .roadmap-col {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
       padding: 2rem;
     }
+
     .roadmap-col-header {
       display: flex;
       align-items: center;
       gap: 0.75rem;
       margin-bottom: 1.75rem;
     }
+
     .roadmap-col-icon {
       width: 36px;
       height: 36px;
@@ -730,23 +924,39 @@
       justify-content: center;
       font-size: 1rem;
     }
-    .col-built .roadmap-col-icon { background: rgba(0,212,170,0.15); color: var(--teal); }
-    .col-building .roadmap-col-icon { background: rgba(255,184,0,0.15); color: var(--amber); }
-    .col-after .roadmap-col-icon { background: rgba(62,137,255,0.12); color: var(--blue); }
+
+    .col-built .roadmap-col-icon {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--teal);
+    }
+
+    .col-building .roadmap-col-icon {
+      background: rgba(255, 184, 0, 0.15);
+      color: var(--amber);
+    }
+
+    .col-after .roadmap-col-icon {
+      background: rgba(62, 137, 255, 0.12);
+      color: var(--blue);
+    }
+
     .roadmap-col-title {
       font-weight: 700;
       font-size: 0.85rem;
       color: var(--text-100);
     }
+
     .roadmap-col-subtitle {
       font-size: 0.72rem;
       color: var(--text-50);
     }
+
     .roadmap-items {
       display: flex;
       flex-direction: column;
       gap: 0.875rem;
     }
+
     .roadmap-item {
       display: flex;
       align-items: flex-start;
@@ -755,6 +965,7 @@
       color: var(--text-70);
       line-height: 1.45;
     }
+
     .roadmap-dot {
       width: 7px;
       height: 7px;
@@ -762,9 +973,18 @@
       margin-top: 0.35em;
       flex-shrink: 0;
     }
-    .col-built .roadmap-dot { background: var(--teal); }
-    .col-building .roadmap-dot { background: var(--amber); }
-    .col-after .roadmap-dot { background: var(--blue); }
+
+    .col-built .roadmap-dot {
+      background: var(--teal);
+    }
+
+    .col-building .roadmap-dot {
+      background: var(--amber);
+    }
+
+    .col-after .roadmap-dot {
+      background: var(--blue);
+    }
 
     /* ══════════════════════════════════
        6. SEARCH SIGNAL (dark terminal)
@@ -774,53 +994,85 @@
       padding: 120px 0;
       overflow: hidden;
     }
+
     .signal-inner {
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
     }
-    .signal-inner .label { color: var(--blue); }
-    .signal-inner .heading-lg { color: var(--text-100); margin-bottom: 1rem; }
-    .signal-inner .body-lg { color: var(--text-70); margin-bottom: 3.5rem; }
+
+    .signal-inner .label {
+      color: var(--blue);
+    }
+
+    .signal-inner .heading-lg {
+      color: var(--text-100);
+      margin-bottom: 1rem;
+    }
+
+    .signal-inner .body-lg {
+      color: var(--text-70);
+      margin-bottom: 3.5rem;
+    }
 
     .terminal-wrap {
       background: #0d0d14;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
       text-align: left;
     }
+
     .terminal-bar {
-      background: rgba(255,255,255,0.04);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
       padding: 0.875rem 1.25rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
     .term-dot {
       width: 12px;
       height: 12px;
       border-radius: 50%;
     }
-    .term-dot:nth-child(1) { background: #FF5F57; }
-    .term-dot:nth-child(2) { background: #FEBC2E; }
-    .term-dot:nth-child(3) { background: #28C840; }
+
+    .term-dot:nth-child(1) {
+      background: #FF5F57;
+    }
+
+    .term-dot:nth-child(2) {
+      background: #FEBC2E;
+    }
+
+    .term-dot:nth-child(3) {
+      background: #28C840;
+    }
+
     .terminal-title {
       font-family: var(--mono);
       font-size: 0.72rem;
       color: var(--text-30);
       margin-left: auto;
     }
+
     .terminal-body {
       padding: 1.75rem;
       font-family: var(--mono);
       font-size: 0.875rem;
       line-height: 2.0;
     }
-    .term-prompt { color: var(--teal); }
-    .term-query { color: var(--text-70); }
+
+    .term-prompt {
+      color: var(--teal);
+    }
+
+    .term-query {
+      color: var(--text-70);
+    }
+
     .term-tag {
       display: inline-block;
       font-size: 0.65rem;
@@ -830,9 +1082,22 @@
       font-weight: 700;
       vertical-align: middle;
     }
-    .term-tag.high { background: rgba(255,77,90,0.2); color: var(--coral); }
-    .term-tag.med  { background: rgba(255,184,0,0.15); color: var(--amber); }
-    .term-tag.low  { background: rgba(62,137,255,0.15); color: var(--blue); }
+
+    .term-tag.high {
+      background: rgba(255, 77, 90, 0.2);
+      color: var(--coral);
+    }
+
+    .term-tag.med {
+      background: rgba(255, 184, 0, 0.15);
+      color: var(--amber);
+    }
+
+    .term-tag.low {
+      background: rgba(62, 137, 255, 0.15);
+      color: var(--blue);
+    }
+
     .typewriter-cursor {
       display: inline-block;
       width: 2px;
@@ -842,9 +1107,17 @@
       vertical-align: middle;
       animation: blink 0.9s step-end infinite;
     }
+
     @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
     }
 
     /* ══════════════════════════════════
@@ -854,20 +1127,34 @@
       background: var(--cream);
       padding: 120px 0;
     }
+
     .whynow-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
     }
-    .whynow-text .label { color: var(--purple); }
-    .whynow-text .heading-lg { color: var(--ink); margin-bottom: 1.5rem; }
-    .whynow-text .body-lg { color: var(--mid); margin-bottom: 1.5rem; }
+
+    .whynow-text .label {
+      color: var(--purple);
+    }
+
+    .whynow-text .heading-lg {
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    .whynow-text .body-lg {
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+    }
+
     .whynow-visual {
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
     }
+
     .whynow-card {
       background: var(--ink);
       border-radius: 16px;
@@ -876,6 +1163,7 @@
       gap: 1rem;
       align-items: flex-start;
     }
+
     .whynow-icon {
       width: 44px;
       height: 44px;
@@ -886,11 +1174,31 @@
       font-size: 1.3rem;
       flex-shrink: 0;
     }
-    .whynow-card:nth-child(1) .whynow-icon { background: rgba(255,77,90,0.15); }
-    .whynow-card:nth-child(2) .whynow-icon { background: rgba(0,212,170,0.15); }
-    .whynow-card:nth-child(3) .whynow-icon { background: rgba(123,80,200,0.15); }
-    .whynow-card-title { font-weight: 700; font-size: 0.9rem; color: var(--text-100); margin-bottom: 0.35rem; }
-    .whynow-card-body { font-size: 0.82rem; color: var(--text-70); line-height: 1.55; }
+
+    .whynow-card:nth-child(1) .whynow-icon {
+      background: rgba(255, 77, 90, 0.15);
+    }
+
+    .whynow-card:nth-child(2) .whynow-icon {
+      background: rgba(0, 212, 170, 0.15);
+    }
+
+    .whynow-card:nth-child(3) .whynow-icon {
+      background: rgba(123, 80, 200, 0.15);
+    }
+
+    .whynow-card-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-100);
+      margin-bottom: 0.35rem;
+    }
+
+    .whynow-card-body {
+      font-size: 0.82rem;
+      color: var(--text-70);
+      line-height: 1.55;
+    }
 
     /* ══════════════════════════════════
        8. SPARTAN ADVANTAGE (dark)
@@ -900,23 +1208,35 @@
       padding: 120px 0;
       overflow: hidden;
     }
+
     .spartan-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
     }
-    .spartan-text .label { color: var(--coral); }
-    .spartan-text .heading-lg { color: var(--text-100); margin-bottom: 1.5rem; }
-    .spartan-text .body-lg { color: var(--text-70); }
+
+    .spartan-text .label {
+      color: var(--coral);
+    }
+
+    .spartan-text .heading-lg {
+      color: var(--text-100);
+      margin-bottom: 1.5rem;
+    }
+
+    .spartan-text .body-lg {
+      color: var(--text-70);
+    }
 
     .spartan-loop {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 24px;
       padding: 2rem;
       position: relative;
     }
+
     .loop-title {
       font-size: 0.72rem;
       font-weight: 700;
@@ -926,18 +1246,21 @@
       margin-bottom: 2rem;
       opacity: 0.8;
     }
+
     .loop-nodes {
       display: flex;
       flex-direction: column;
       gap: 0;
       position: relative;
     }
+
     .loop-node {
       display: flex;
       align-items: flex-start;
       gap: 1.25rem;
       padding: 1rem 0;
     }
+
     .loop-node-left {
       display: flex;
       flex-direction: column;
@@ -945,12 +1268,13 @@
       gap: 0;
       flex-shrink: 0;
     }
+
     .loop-circle {
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: rgba(255,77,90,0.12);
-      border: 2px solid rgba(255,77,90,0.3);
+      background: rgba(255, 77, 90, 0.12);
+      border: 2px solid rgba(255, 77, 90, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -958,31 +1282,51 @@
       color: var(--coral);
       flex-shrink: 0;
     }
+
     .loop-line {
       width: 2px;
       flex: 1;
       min-height: 16px;
-      background: linear-gradient(to bottom, rgba(255,77,90,0.3), rgba(255,77,90,0.05));
+      background: linear-gradient(to bottom, rgba(255, 77, 90, 0.3), rgba(255, 77, 90, 0.05));
       margin-top: 4px;
     }
-    .loop-node:last-child .loop-line { display: none; }
-    .loop-node-content { padding-top: 0.4rem; }
-    .loop-node-title { font-weight: 700; font-size: 0.875rem; color: var(--text-100); margin-bottom: 0.25rem; }
-    .loop-node-body { font-size: 0.8rem; color: var(--text-50); line-height: 1.5; }
+
+    .loop-node:last-child .loop-line {
+      display: none;
+    }
+
+    .loop-node-content {
+      padding-top: 0.4rem;
+    }
+
+    .loop-node-title {
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--text-100);
+      margin-bottom: 0.25rem;
+    }
+
+    .loop-node-body {
+      font-size: 0.8rem;
+      color: var(--text-50);
+      line-height: 1.5;
+    }
 
     .spartan-stat-block {
       margin-top: 2rem;
       padding-top: 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       gap: 2rem;
     }
+
     .spartan-mini-stat .num {
       font-family: var(--mono);
       font-size: 1.5rem;
       font-weight: 700;
       color: var(--coral);
     }
+
     .spartan-mini-stat .lbl {
       font-size: 0.75rem;
       color: var(--text-50);
@@ -996,24 +1340,34 @@
       padding: 120px 0;
       text-align: center;
     }
+
     .success-inner {
       max-width: 720px;
       margin: 0 auto;
     }
-    .success-inner .label { color: var(--purple); }
-    .success-inner .heading-lg { color: var(--ink); margin-bottom: 1.5rem; }
+
+    .success-inner .label {
+      color: var(--purple);
+    }
+
+    .success-inner .heading-lg {
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
     .success-date {
       display: inline-block;
       font-family: var(--mono);
       font-size: 0.8rem;
       font-weight: 700;
       color: var(--purple);
-      background: rgba(123,80,200,0.1);
-      border: 1px solid rgba(123,80,200,0.2);
+      background: rgba(123, 80, 200, 0.1);
+      border: 1px solid rgba(123, 80, 200, 0.2);
       padding: 4px 16px;
       border-radius: 100px;
       margin-bottom: 1.5rem;
     }
+
     .success-quote {
       font-size: clamp(1.5rem, 3.5vw, 2.25rem);
       font-weight: 800;
@@ -1022,20 +1376,33 @@
       line-height: 1.2;
       margin-bottom: 2rem;
     }
-    .success-quote em { font-style: normal; color: var(--purple); }
-    .success-body { font-size: 1.0625rem; line-height: 1.72; color: var(--mid); margin-bottom: 2.5rem; }
+
+    .success-quote em {
+      font-style: normal;
+      color: var(--purple);
+    }
+
+    .success-body {
+      font-size: 1.0625rem;
+      line-height: 1.72;
+      color: var(--mid);
+      margin-bottom: 2.5rem;
+    }
+
     .success-metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
       margin-top: 3rem;
     }
+
     .success-metric {
       background: white;
       border-radius: 16px;
       padding: 1.5rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     }
+
     .success-metric .num {
       font-size: 2rem;
       font-weight: 800;
@@ -1043,6 +1410,7 @@
       color: var(--purple);
       margin-bottom: 0.25rem;
     }
+
     .success-metric .lbl {
       font-size: 0.82rem;
       color: var(--mid);
@@ -1058,6 +1426,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .cta-glow {
       position: absolute;
       width: 600px;
@@ -1066,15 +1435,17 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: radial-gradient(ellipse, rgba(123,80,200,0.12) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(123, 80, 200, 0.12) 0%, transparent 70%);
       pointer-events: none;
     }
+
     .cta-inner {
       position: relative;
       z-index: 1;
       max-width: 680px;
       margin: 0 auto;
     }
+
     .cta-eyebrow {
       font-size: 0.72rem;
       font-weight: 700;
@@ -1083,6 +1454,7 @@
       color: var(--purple);
       margin-bottom: 1.5rem;
     }
+
     .cta-headline {
       font-size: clamp(2.5rem, 5vw, 3.75rem);
       font-weight: 800;
@@ -1091,7 +1463,13 @@
       color: var(--text-100);
       margin-bottom: 1.5rem;
     }
-    .cta-sub { font-size: 1.0625rem; color: var(--text-70); margin-bottom: 3rem; }
+
+    .cta-sub {
+      font-size: 1.0625rem;
+      color: var(--text-70);
+      margin-bottom: 3rem;
+    }
+
     .cta-btn {
       display: inline-flex;
       align-items: center;
@@ -1104,14 +1482,16 @@
       border-radius: 100px;
       cursor: pointer;
       border: none;
-      box-shadow: 0 16px 48px rgba(255,77,90,0.4);
+      box-shadow: 0 16px 48px rgba(255, 77, 90, 0.4);
       text-decoration: none;
       transition: transform 0.2s, box-shadow 0.2s;
     }
+
     .cta-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 20px 60px rgba(255,77,90,0.5);
+      box-shadow: 0 20px 60px rgba(255, 77, 90, 0.5);
     }
+
     .cta-wordmark {
       display: block;
       font-family: var(--logo-font);
@@ -1145,12 +1525,14 @@
       border-width: 2px;
       border-style: solid;
     }
+
     .sticker.teal {
       background: var(--teal);
       color: var(--ink);
       border-color: #009e7f;
       box-shadow: 3px 3px 0 #009e7f;
     }
+
     .sticker.coral {
       background: var(--coral);
       color: #fff;
@@ -1162,26 +1544,105 @@
        MOBILE RESPONSIVE
     ══════════════════════════════════ */
     @media (max-width: 768px) {
-      .hearing-card { flex: 0 0 240px; }
+      #hero {
+        height: 100svh;
+        max-height: 100svh;
+      }
+
+      .hearing-card {
+        flex: 0 0 240px;
+      }
+
       .problem-grid,
       .whynow-grid,
       .spartan-inner {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 1rem;
       }
-      .market-stats { grid-template-columns: 1fr; }
-      .competitor-grid { grid-template-columns: 1fr 1fr; }
-      .roadmap-cols { grid-template-columns: 1fr; }
-      .success-metrics { grid-template-columns: 1fr; }
-      .phases-pin-wrap { flex-direction: column; }
-      .phases-left { width: 100%; }
-      .phases-right { min-height: 480px; }
+
+      .market-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .competitor-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .roadmap-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .success-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .phases-pin-wrap {
+        flex-direction: column;
+      }
+
+      .phases-left {
+        width: 100%;
+      }
+
+      .phases-right {
+        min-height: 480px;
+      }
+
+      section {
+        padding: 1rem !important;
+      }
+
+      #problem>div>div.problem-grid>div.problem-text>div.label.coral.reveal {
+        margin-bottom: 0.25rem !important;
+        font-size: 0.9rem !important;
+      }
+      .market-header{
+        margin-bottom: 1rem;
+      }
+      .market-stats{
+        margin-bottom: 1rem;
+      }
+      #market > div > div:nth-child(3){
+        margin-bottom: 7px!important;
+      }
+      #phases > div{
+        padding: 0 1rem!important;
+      }
+      #phasesPinWrap{
+        padding: 0px!important;
+        gap: 1rem;
+      }
+      #phasesPinWrap > div.phases-left > div.phases-progress{
+        margin-top: 0px;
+      }
+      #roadmap > div > div.roadmap-header{
+        margin-bottom: 1rem;
+      }
+      #signal > div > div > p{
+        margin-bottom: 1.5rem;
+      }
+      #success > div > div > div{
+        margin-bottom: 1rem;
+      }
+      #success > div > div > p{
+        margin-bottom: 1rem;
+      }
+      #success > div > div > div.success-metrics{
+        margin-top: 0px;
+      }
+      #cta > div.container > div > p{
+        margin-bottom: 1.5rem;
+      }
     }
+
     @media (max-width: 480px) {
-      .competitor-grid { grid-template-columns: 1fr; }
+      .competitor-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- ════════════════════════════════════════════
@@ -1193,8 +1654,7 @@
     <div class="hero-content">
       <!-- Logo placeholder — SVG wordmark -->
       <div id="heroLogo" class="hero-logo" style="opacity:0; transform:translateY(12px);">
-        <img src="pynch-wordmark-mocra.svg" alt="Pynch" height="64"
-          style="filter: brightness(0) invert(1);"
+        <img src="pynch-wordmark-mocra.svg" alt="Pynch" height="64" style="filter: brightness(0) invert(1);"
           onerror="this.outerHTML='<span style=\'font-family:var(--logo-font);font-size:2.5rem;color:#fff;letter-spacing:0.04em;\'>pynch</span>'" />
       </div>
       <div class="hero-eyebrow" id="heroEyebrow">Vision 2026 — Neel Bhatt, March 2026</div>
@@ -1204,7 +1664,8 @@
       <p class="hero-sub" id="heroSub">
         An honest account of what we're building, why it matters, and where it goes.
       </p>
-      <button class="hero-cta" id="heroCta" onclick="document.getElementById('problem').scrollIntoView({behavior:'smooth'})">
+      <button class="hero-cta" id="heroCta"
+        onclick="document.getElementById('problem').scrollIntoView({behavior:'smooth'})">
         Read the vision ↓
       </button>
     </div>
@@ -1223,16 +1684,23 @@
           <div class="label coral reveal">The Problem</div>
           <h2 class="heading-lg reveal">A people problem disguised as a marketing problem.</h2>
           <p class="body-lg reveal">
-            You need 100 creators to get 20 good videos. To get 100 creators, you need to send about 2,000 DMs. Then vet them, follow up, send briefs, chase content, review it, pay them, track whether any of it worked. Then do it again next month.
+            You need 100 creators to get 20 good videos. To get 100 creators, you need to send about 2,000 DMs. Then vet
+            them, follow up, send briefs, chase content, review it, pay them, track whether any of it worked. Then do it
+            again next month.
           </p>
           <p class="body-lg reveal" style="color: var(--mid);">
-            The entire B2B lead gen industry was built around email addresses and job titles. It doesn't work here. All the Clay workflows, Outreach sequences, intent data platforms — none of it was built for a creator whose professional presence is an Instagram bio and a DM inbox.
+            The entire B2B lead gen industry was built around email addresses and job titles. It doesn't work here. All
+            the Clay workflows, Outreach sequences, intent data platforms — none of it was built for a creator whose
+            professional presence is an Instagram bio and a DM inbox.
           </p>
           <div class="problem-quote reveal">
             <div class="stat-line">// This week at Spartan / DietFit</div>
-            <div style="color: rgba(255,255,255,0.6);">DMs sent ······ <span style="color:#fff;font-weight:700;">112</span></div>
-            <div style="color: rgba(255,255,255,0.6);">Replies ········· <span style="color:#fff;font-weight:700;">8–10</span></div>
-            <div style="color: rgba(255,255,255,0.4); font-size:0.75rem; margin-top:0.75rem;">That's not a bad team. That's a broken process.<br>And it's the industry standard.</div>
+            <div style="color: rgba(255,255,255,0.6);">DMs sent ······ <span
+                style="color:#fff;font-weight:700;">112</span></div>
+            <div style="color: rgba(255,255,255,0.6);">Replies ········· <span
+                style="color:#fff;font-weight:700;">8–10</span></div>
+            <div style="color: rgba(255,255,255,0.4); font-size:0.75rem; margin-top:0.75rem;">That's not a bad team.
+              That's a broken process.<br>And it's the industry standard.</div>
           </div>
         </div>
 
@@ -1274,7 +1742,8 @@
             <img src="pynch-drive-images/1.png" alt="User research screenshot 1" class="hearing-card-img" />
             <div class="hearing-card-overlay">
               <div class="hearing-source-tag">DM Conversation</div>
-              <p class="hearing-quote">I search TikTok and Instagram by hashtags... review content style, authenticity, aesthetic fit... then track everything in spreadsheets</p>
+              <p class="hearing-quote">I search TikTok and Instagram by hashtags... review content style, authenticity,
+                aesthetic fit... then track everything in spreadsheets</p>
             </div>
           </div>
 
@@ -1282,7 +1751,8 @@
             <img src="pynch-drive-images/2.png" alt="User research screenshot 2" class="hearing-card-img" />
             <div class="hearing-card-overlay">
               <div class="hearing-source-tag">DM Conversation</div>
-              <p class="hearing-quote">Even with Modash and Aspire, I still find the best creators directly on TikTok. The tools help with discovery but fail at everything after.</p>
+              <p class="hearing-quote">Even with Modash and Aspire, I still find the best creators directly on TikTok.
+                The tools help with discovery but fail at everything after.</p>
             </div>
           </div>
 
@@ -1298,7 +1768,8 @@
             <img src="pynch-drive-images/4.png" alt="User research screenshot 4" class="hearing-card-img" />
             <div class="hearing-card-overlay">
               <div class="hearing-source-tag">Chat</div>
-              <p class="hearing-quote">Outreach automation is weak. Creator vetting still takes forever. Campaign execution gets messy.</p>
+              <p class="hearing-quote">Outreach automation is weak. Creator vetting still takes forever. Campaign
+                execution gets messy.</p>
             </div>
           </div>
 
@@ -1324,7 +1795,8 @@
       <div class="market-header">
         <div class="label teal reveal">The Market</div>
         <h2 class="heading-lg reveal">The demand is there. The tooling is broken.</h2>
-        <p class="body-lg reveal">The creator economy is enormous and still growing. The tooling for mid-market brands is a decade behind.</p>
+        <p class="body-lg reveal">The creator economy is enormous and still growing. The tooling for mid-market brands
+          is a decade behind.</p>
       </div>
 
       <div class="market-stats">
@@ -1366,7 +1838,8 @@
           <div class="pynch-badge">Gap in market</div>
           <div class="comp-name">Nobody</div>
           <div class="comp-price" style="color: var(--teal);">Pynch fills this</div>
-          <div class="comp-desc">Proactive outbound scouting + automated ops + farm-scale management at a price small teams can use.</div>
+          <div class="comp-desc">Proactive outbound scouting + automated ops + farm-scale management at a price small
+            teams can use.</div>
         </div>
       </div>
     </div>
@@ -1378,11 +1851,13 @@
   <section id="phases" style="padding: 0;">
     <div class="container" style="padding-top: 120px; padding-bottom: 120px;">
       <!-- Static layout (JS upgrades to sticky) -->
-      <div id="phasesPinWrap" class="phases-pin-wrap" style="min-height: 600px; align-items: flex-start; padding-top: 2rem;">
+      <div id="phasesPinWrap" class="phases-pin-wrap"
+        style="min-height: 600px; align-items: flex-start; padding-top: 2rem;">
         <div class="phases-left" style="position: sticky; top: 100px;">
           <div class="label purple">What Pynch Is</div>
           <h2 class="heading-lg">Three phases.<br>One direction.</h2>
-          <p class="body-lg" style="color: var(--mid); margin-top: 1rem;">From automated ops tool to the infrastructure layer of the creator economy.</p>
+          <p class="body-lg" style="color: var(--mid); margin-top: 1rem;">From automated ops tool to the infrastructure
+            layer of the creator economy.</p>
           <div class="phases-progress">
             <div class="phase-indicator active" data-phase="0" onclick="setPhase(0)">
               <div class="phase-dot"></div>
@@ -1401,13 +1876,15 @@
 
         <div class="phases-right" style="padding-top: 0.5rem;">
           <!-- Phase 0 -->
-          <div class="phase-panel active" id="panel-0" style="position: relative; margin-bottom: 1.5rem; opacity: 1; transform: none; pointer-events: auto;">
+          <div class="phase-panel active" id="panel-0"
+            style="position: relative; margin-bottom: 1.5rem; opacity: 1; transform: none; pointer-events: auto;">
             <div class="phase-card" style="--phase-color: var(--purple);">
               <div>
                 <div class="phase-tag">Today</div>
                 <h3 class="heading-md">Brand-side operations. Farm Mode.</h3>
                 <p class="body-md" style="color: var(--text-70); margin-top: 0.75rem;">
-                  Pynch is an agent-powered creator operations tool. It automates the full creator pipeline — sourcing, outreach, onboarding, briefing, content collection, payment, performance tracking.
+                  Pynch is an agent-powered creator operations tool. It automates the full creator pipeline — sourcing,
+                  outreach, onboarding, briefing, content collection, payment, performance tracking.
                 </p>
                 <div class="phase-features">
                   <div class="phase-feat">Build a stable of 100+ micro creators at $50/video vs $500</div>
@@ -1421,18 +1898,25 @@
           </div>
 
           <!-- Phase 1 -->
-          <div class="phase-panel" id="panel-1" style="position: relative; margin-bottom: 1.5rem; opacity: 0.4; transform: none; pointer-events: auto; transition: opacity 0.4s;">
+          <div class="phase-panel" id="panel-1"
+            style="position: relative; margin-bottom: 1.5rem; opacity: 0.4; transform: none; pointer-events: auto; transition: opacity 0.4s;">
             <div class="phase-card" style="--phase-color: var(--teal);">
               <div>
-                <div class="phase-tag" style="color: var(--teal); background: rgba(0,212,170,0.12); border-color: rgba(0,212,170,0.25);">Near-term</div>
+                <div class="phase-tag"
+                  style="color: var(--teal); background: rgba(0,212,170,0.12); border-color: rgba(0,212,170,0.25);">
+                  Near-term</div>
                 <h3 class="heading-md">The best creator farming platform in the world.</h3>
                 <p class="body-md" style="color: var(--text-70); margin-top: 0.75rem;">
-                  Genuinely excellent at this before expanding to anything else. If we can get a brand to 100 creators producing reliably at $50/video — consistently, without drama — that's a product worth paying for.
+                  Genuinely excellent at this before expanding to anything else. If we can get a brand to 100 creators
+                  producing reliably at $50/video — consistently, without drama — that's a product worth paying for.
                 </p>
                 <div class="phase-features" style="--phase-color: var(--teal);">
-                  <div class="phase-feat" style="--phase-color: var(--teal);">Crack lead gen, brief quality, content review, payments, tracking</div>
-                  <div class="phase-feat" style="--phase-color: var(--teal);">AI pre-screening at scale — nobody's solved this for this market</div>
-                  <div class="phase-feat" style="--phase-color: var(--teal);">The bar: does it reliably work, not feature completeness</div>
+                  <div class="phase-feat" style="--phase-color: var(--teal);">Crack lead gen, brief quality, content
+                    review, payments, tracking</div>
+                  <div class="phase-feat" style="--phase-color: var(--teal);">AI pre-screening at scale — nobody's
+                    solved this for this market</div>
+                  <div class="phase-feat" style="--phase-color: var(--teal);">The bar: does it reliably work, not
+                    feature completeness</div>
                 </div>
               </div>
               <div class="phase-number">02</div>
@@ -1440,18 +1924,26 @@
           </div>
 
           <!-- Phase 2 -->
-          <div class="phase-panel" id="panel-2" style="position: relative; opacity: 0.4; transform: none; pointer-events: auto; transition: opacity 0.4s;">
+          <div class="phase-panel" id="panel-2"
+            style="position: relative; opacity: 0.4; transform: none; pointer-events: auto; transition: opacity 0.4s;">
             <div class="phase-card" style="--phase-color: var(--blue);">
               <div>
-                <div class="phase-tag" style="color: var(--blue); background: rgba(62,137,255,0.12); border-color: rgba(62,137,255,0.25);">Long-term</div>
+                <div class="phase-tag"
+                  style="color: var(--blue); background: rgba(62,137,255,0.12); border-color: rgba(62,137,255,0.25);">
+                  Long-term</div>
                 <h3 class="heading-md">The network becomes the asset. The ZipRecruiter model.</h3>
                 <p class="body-md" style="color: var(--text-70); margin-top: 0.75rem;">
-                  Employers post jobs → builds candidate pool → candidate pool becomes the product. Brands run creator ops through Pynch → collectively build the creator network → network makes Pynch more valuable to every other brand.
+                  Employers post jobs → builds candidate pool → candidate pool becomes the product. Brands run creator
+                  ops through Pynch → collectively build the creator network → network makes Pynch more valuable to
+                  every other brand.
                 </p>
                 <div class="phase-features" style="--phase-color: var(--blue);">
-                  <div class="phase-feat" style="--phase-color: var(--blue);">Network distributable through campaigns, creator tools, new products</div>
-                  <div class="phase-feat" style="--phase-color: var(--blue);">Creators benefit from a system that pays reliably, gives good briefs</div>
-                  <div class="phase-feat" style="--phase-color: var(--blue);">We don't announce this. We just build the thing that makes it happen.</div>
+                  <div class="phase-feat" style="--phase-color: var(--blue);">Network distributable through campaigns,
+                    creator tools, new products</div>
+                  <div class="phase-feat" style="--phase-color: var(--blue);">Creators benefit from a system that pays
+                    reliably, gives good briefs</div>
+                  <div class="phase-feat" style="--phase-color: var(--blue);">We don't announce this. We just build the
+                    thing that makes it happen.</div>
                 </div>
               </div>
               <div class="phase-number">03</div>
@@ -1481,9 +1973,15 @@
             </div>
           </div>
           <div class="roadmap-items">
-            <div class="roadmap-item"><div class="roadmap-dot"></div>Creator discovery &amp; list building (automated search + filtering)</div>
-            <div class="roadmap-item"><div class="roadmap-dot"></div>Automated DM outreach with reply tracking and follow-up sequences</div>
-            <div class="roadmap-item"><div class="roadmap-dot"></div>Per-brand creator recruitment landing pages (brand.pynchhq.com)</div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>Creator discovery &amp; list building (automated search + filtering)
+            </div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>Automated DM outreach with reply tracking and follow-up sequences
+            </div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>Per-brand creator recruitment landing pages (brand.pynchhq.com)
+            </div>
           </div>
         </div>
         <div class="roadmap-col col-building reveal">
@@ -1495,9 +1993,15 @@
             </div>
           </div>
           <div class="roadmap-items">
-            <div class="roadmap-item"><div class="roadmap-dot"></div>Brief creation and content collection</div>
-            <div class="roadmap-item"><div class="roadmap-dot"></div>Mass payment operations</div>
-            <div class="roadmap-item"><div class="roadmap-dot"></div>Performance tracking per creator (views, engagement, ROAS)</div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>Brief creation and content collection
+            </div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>Mass payment operations
+            </div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>Performance tracking per creator (views, engagement, ROAS)
+            </div>
           </div>
         </div>
         <div class="roadmap-col col-after reveal">
@@ -1509,9 +2013,15 @@
             </div>
           </div>
           <div class="roadmap-items">
-            <div class="roadmap-item"><div class="roadmap-dot"></div>Creator coaching and training flows</div>
-            <div class="roadmap-item"><div class="roadmap-dot"></div>Full campaign mode</div>
-            <div class="roadmap-item"><div class="roadmap-dot"></div>AI-assisted content QA at scale</div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>Creator coaching and training flows
+            </div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>Full campaign mode
+            </div>
+            <div class="roadmap-item">
+              <div class="roadmap-dot"></div>AI-assisted content QA at scale
+            </div>
           </div>
         </div>
       </div>
@@ -1525,8 +2035,10 @@
     <div class="container">
       <div class="signal-inner">
         <div class="label" style="color: var(--blue);">The Search Signal</div>
-        <h2 class="heading-lg reveal" style="color: var(--text-100);">The market is already there.<br>It's just not being served.</h2>
-        <p class="body-lg reveal" style="color: var(--text-70);">People actively searching for things like these aren't casually browsing. They're trying to figure out how to do this with spreadsheets at 11pm on a Tuesday.</p>
+        <h2 class="heading-lg reveal" style="color: var(--text-100);">The market is already there.<br>It's just not
+          being served.</h2>
+        <p class="body-lg reveal" style="color: var(--text-70);">People actively searching for things like these aren't
+          casually browsing. They're trying to figure out how to do this with spreadsheets at 11pm on a Tuesday.</p>
         <div class="terminal-wrap reveal" id="terminalWrap">
           <div class="terminal-bar">
             <div class="term-dot"></div>
@@ -1535,7 +2047,8 @@
             <div class="terminal-title">search_queries.log</div>
           </div>
           <div class="terminal-body" id="terminalBody">
-            <div><span class="term-prompt">$ </span><span class="term-query"></span><span class="typewriter-cursor" id="twCursor"></span></div>
+            <div><span class="term-prompt">$ </span><span class="term-query"></span><span class="typewriter-cursor"
+                id="twCursor"></span></div>
             <div id="termLines"></div>
           </div>
         </div>
@@ -1553,10 +2066,12 @@
           <div class="label purple reveal">Why Now</div>
           <h2 class="heading-lg reveal">The contrarian view:<br>AI makes real content more valuable.</h2>
           <p class="body-lg reveal" style="color: var(--mid);">
-            Platforms are being flooded with AI-generated videos. AI avatars. Synthetic creators. Audiences are already developing a radar for it — and they reject it.
+            Platforms are being flooded with AI-generated videos. AI avatars. Synthetic creators. Audiences are already
+            developing a radar for it — and they reject it.
           </p>
           <p class="body-lg reveal" style="color: var(--mid);">
-            Brands that figured out how to work with real humans at scale will have a meaningful advantage. Pynch's position: use AI to handle all the operational overhead so brands can afford to work with more real people.
+            Brands that figured out how to work with real humans at scale will have a meaningful advantage. Pynch's
+            position: use AI to handle all the operational overhead so brands can afford to work with more real people.
           </p>
           <div class="reveal" style="margin-top: 1.5rem;">
             <span class="sticker teal" style="transform: rotate(1deg);">AI runs the ops. Humans make the content.</span>
@@ -1567,21 +2082,24 @@
             <div class="whynow-icon">🤖</div>
             <div>
               <div class="whynow-card-title">AI floods the feed</div>
-              <div class="whynow-card-body">Synthetic creators, AI avatars, generated videos. Audiences develop a radar for it. Regulation is catching up.</div>
+              <div class="whynow-card-body">Synthetic creators, AI avatars, generated videos. Audiences develop a radar
+                for it. Regulation is catching up.</div>
             </div>
           </div>
           <div class="whynow-card reveal">
             <div class="whynow-icon">📱</div>
             <div>
               <div class="whynow-card-title">Human content becomes scarce</div>
-              <div class="whynow-card-body">Real people, real results. Nano-influencers average 6.23% engagement — 2.3× higher than macro creators.</div>
+              <div class="whynow-card-body">Real people, real results. Nano-influencers average 6.23% engagement — 2.3×
+                higher than macro creators.</div>
             </div>
           </div>
           <div class="whynow-card reveal">
             <div class="whynow-icon">⚡</div>
             <div>
               <div class="whynow-card-title">New York already moved</div>
-              <div class="whynow-card-body">NY law requires AI performer disclosure in paid ads, effective June 2026. More states and countries will follow.</div>
+              <div class="whynow-card-body">NY law requires AI performer disclosure in paid ads, effective June 2026.
+                More states and countries will follow.</div>
             </div>
           </div>
         </div>
@@ -1597,12 +2115,15 @@
       <div class="spartan-inner">
         <div class="spartan-text">
           <div class="label coral reveal">The Spartan Advantage</div>
-          <h2 class="heading-lg reveal" style="color: var(--text-100);">Not a demo environment.<br>A real feedback loop.</h2>
+          <h2 class="heading-lg reveal" style="color: var(--text-100);">Not a demo environment.<br>A real feedback loop.
+          </h2>
           <p class="body-lg reveal" style="color: var(--text-70);">
-            This isn't a theoretical problem. Spartan runs DietFit. The creator pipeline for DietFit is genuinely painful — real hours, real people, real manual work.
+            This isn't a theoretical problem. Spartan runs DietFit. The creator pipeline for DietFit is genuinely
+            painful — real hours, real people, real manual work.
           </p>
           <p class="body-lg reveal" style="color: var(--text-70); margin-top: 1rem;">
-            Being the first customer who depends on your own product is the most useful thing a founding team can be. Bad ideas fail fast. Good ones prove themselves with real stakes.
+            Being the first customer who depends on your own product is the most useful thing a founding team can be.
+            Bad ideas fail fast. Good ones prove themselves with real stakes.
           </p>
         </div>
 
@@ -1616,7 +2137,8 @@
               </div>
               <div class="loop-node-content">
                 <div class="loop-node-title">112 DMs sent this week</div>
-                <div class="loop-node-body">By a human sitting at a desk. Platform throttle limits everything else.</div>
+                <div class="loop-node-body">By a human sitting at a desk. Platform throttle limits everything else.
+                </div>
               </div>
             </div>
             <div class="loop-node">
@@ -1636,7 +2158,8 @@
               </div>
               <div class="loop-node-content">
                 <div class="loop-node-title">Do it again next month</div>
-                <div class="loop-node-body">Vet, follow up, send briefs, chase content, review, pay, track. Repeat.</div>
+                <div class="loop-node-body">Vet, follow up, send briefs, chase content, review, pay, track. Repeat.
+                </div>
               </div>
             </div>
             <div class="loop-node">
@@ -1645,7 +2168,8 @@
               </div>
               <div class="loop-node-content">
                 <div class="loop-node-title">Pynch changes this</div>
-                <div class="loop-node-body">We feel this problem every single week. Every test has real stakes. That's worth more than a clean demo.</div>
+                <div class="loop-node-body">We feel this problem every single week. Every test has real stakes. That's
+                  worth more than a clean demo.</div>
               </div>
             </div>
           </div>
@@ -1676,7 +2200,8 @@
           "<em>We use it and we depend on it.</em>"
         </div>
         <p class="success-body reveal">
-          Not fifty paying customers. Not a funding round. Not month-over-month growth charts. A small number of customers who would be angry if it went away. Who tell other people because it solved something real.
+          Not fifty paying customers. Not a funding round. Not month-over-month growth charts. A small number of
+          customers who would be angry if it went away. Who tell other people because it solved something real.
         </p>
         <p class="success-body reveal" style="font-style: italic; font-size: 1rem;">
           The goal isn't feature completeness. It's building something indispensable.
@@ -1790,48 +2315,48 @@ void main(){
       gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog); gl.useProgram(prog);
       const vao = gl.createVertexArray(); gl.bindVertexArray(vao);
       const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,0,1,-1,0,1,1,0,-1,-1,0,1,1,0,-1,1,0]), gl.STATIC_DRAW);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0]), gl.STATIC_DRAW);
       const posLoc = gl.getAttribLocation(prog, 'position');
       gl.enableVertexAttribArray(posLoc); gl.vertexAttribPointer(posLoc, 3, gl.FLOAT, false, 0, 0);
       gl.bindVertexArray(null);
       const U = {};
-      ['color1','color2','color3','color4','colorSize','colorSpacing','colorRotation','colorSpread','displacement','zoom','spacing','seed','viewportSize','colorOffset','transformPosition','noiseSize','noiseIntensity']
+      ['color1', 'color2', 'color3', 'color4', 'colorSize', 'colorSpacing', 'colorRotation', 'colorSpread', 'displacement', 'zoom', 'spacing', 'seed', 'viewportSize', 'colorOffset', 'transformPosition', 'noiseSize', 'noiseIntensity']
         .forEach(n => U[n] = gl.getUniformLocation(prog, n));
-      function hex3(h){return[parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255];}
+      function hex3(h) { return [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.slice(3, 5), 16) / 255, parseInt(h.slice(5, 7), 16) / 255]; }
       const state = {
-        color1:hex3('#7B50C8'),color2:hex3('#00D4AA'),color3:hex3('#9B70E8'),color4:hex3('#FF5A45'),
-        colorSize:1.0,colorSpacing:0.60,colorRotation:-0.38,colorSpread:5.40,
-        displacement:4.20,zoom:0.72,spacing:4.27,seed:Math.random()*100-50,
-        noiseSize:0.5,noiseIntensity:0.028,
-        colorOffset:[-0.7741,-0.2064],transformPosition:[-0.28,-0.44],
+        color1: hex3('#7B50C8'), color2: hex3('#00D4AA'), color3: hex3('#9B70E8'), color4: hex3('#FF5A45'),
+        colorSize: 1.0, colorSpacing: 0.60, colorRotation: -0.38, colorSpread: 5.40,
+        displacement: 4.20, zoom: 0.72, spacing: 4.27, seed: Math.random() * 100 - 50,
+        noiseSize: 0.5, noiseIntensity: 0.028,
+        colorOffset: [-0.7741, -0.2064], transformPosition: [-0.28, -0.44],
       };
-      let mx=0.5,my=0.5,tx=0.5,ty=0.5;
-      const BTX=-0.28,BTY=-0.44,MSX=1.20,MSY=0.90;
-      document.addEventListener('mousemove', e=>{tx=e.clientX/innerWidth;ty=e.clientY/innerHeight;});
-      document.addEventListener('touchmove', e=>{if(e.touches[0]){tx=e.touches[0].clientX/innerWidth;ty=e.touches[0].clientY/innerHeight;}},{passive:true});
-      function resize(){
-        glCanvas.width=innerWidth*(devicePixelRatio||1);glCanvas.height=innerHeight*(devicePixelRatio||1);
-        glCanvas.style.width=innerWidth+'px';glCanvas.style.height=innerHeight+'px';
-        gl.viewport(0,0,glCanvas.width,glCanvas.height);
+      let mx = 0.5, my = 0.5, tx = 0.5, ty = 0.5;
+      const BTX = -0.28, BTY = -0.44, MSX = 1.20, MSY = 0.90;
+      document.addEventListener('mousemove', e => { tx = e.clientX / innerWidth; ty = e.clientY / innerHeight; });
+      document.addEventListener('touchmove', e => { if (e.touches[0]) { tx = e.touches[0].clientX / innerWidth; ty = e.touches[0].clientY / innerHeight; } }, { passive: true });
+      function resize() {
+        glCanvas.width = innerWidth * (devicePixelRatio || 1); glCanvas.height = innerHeight * (devicePixelRatio || 1);
+        glCanvas.style.width = innerWidth + 'px'; glCanvas.style.height = innerHeight + 'px';
+        gl.viewport(0, 0, glCanvas.width, glCanvas.height);
       }
-      window.addEventListener('resize',resize,{passive:true}); resize();
-      function draw(){
-        gl.useProgram(prog);gl.bindVertexArray(vao);
-        gl.uniform3fv(U.color1,state.color1);gl.uniform3fv(U.color2,state.color2);
-        gl.uniform3fv(U.color3,state.color3);gl.uniform3fv(U.color4,state.color4);
-        gl.uniform1f(U.colorSize,Math.max(state.colorSize,.001));gl.uniform1f(U.colorSpacing,state.colorSpacing);
-        gl.uniform1f(U.colorRotation,state.colorRotation);gl.uniform1f(U.colorSpread,state.colorSpread);
-        gl.uniform1f(U.displacement,state.displacement);gl.uniform1f(U.zoom,state.zoom);
-        gl.uniform1f(U.spacing,state.spacing);gl.uniform1f(U.seed,state.seed);
-        gl.uniform2fv(U.viewportSize,[innerWidth,innerHeight]);gl.uniform2fv(U.colorOffset,state.colorOffset);
-        gl.uniform2fv(U.transformPosition,state.transformPosition);
-        gl.uniform1f(U.noiseSize,state.noiseSize);gl.uniform1f(U.noiseIntensity,state.noiseIntensity);
-        gl.drawArrays(gl.TRIANGLES,0,6);gl.bindVertexArray(null);
+      window.addEventListener('resize', resize, { passive: true }); resize();
+      function draw() {
+        gl.useProgram(prog); gl.bindVertexArray(vao);
+        gl.uniform3fv(U.color1, state.color1); gl.uniform3fv(U.color2, state.color2);
+        gl.uniform3fv(U.color3, state.color3); gl.uniform3fv(U.color4, state.color4);
+        gl.uniform1f(U.colorSize, Math.max(state.colorSize, .001)); gl.uniform1f(U.colorSpacing, state.colorSpacing);
+        gl.uniform1f(U.colorRotation, state.colorRotation); gl.uniform1f(U.colorSpread, state.colorSpread);
+        gl.uniform1f(U.displacement, state.displacement); gl.uniform1f(U.zoom, state.zoom);
+        gl.uniform1f(U.spacing, state.spacing); gl.uniform1f(U.seed, state.seed);
+        gl.uniform2fv(U.viewportSize, [innerWidth, innerHeight]); gl.uniform2fv(U.colorOffset, state.colorOffset);
+        gl.uniform2fv(U.transformPosition, state.transformPosition);
+        gl.uniform1f(U.noiseSize, state.noiseSize); gl.uniform1f(U.noiseIntensity, state.noiseIntensity);
+        gl.drawArrays(gl.TRIANGLES, 0, 6); gl.bindVertexArray(null);
       }
-      function loop(){
-        mx+=(tx-mx)*.08;my+=(ty-my)*.08;
-        state.transformPosition=[BTX+(mx-.5)*MSX,BTY+(my-.5)*MSY];
-        state.seed+=.00045;draw();requestAnimationFrame(loop);
+      function loop() {
+        mx += (tx - mx) * .08; my += (ty - my) * .08;
+        state.transformPosition = [BTX + (mx - .5) * MSX, BTY + (my - .5) * MSY];
+        state.seed += .00045; draw(); requestAnimationFrame(loop);
       }
       loop();
     })();
@@ -1841,11 +2366,11 @@ void main(){
     ═══════════════════════════════════ */
     window.addEventListener('DOMContentLoaded', () => {
       const tl = gsap.timeline({ delay: 0.2 });
-      tl.to('#heroLogo',     { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
-        .to('#heroEyebrow',  { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+      tl.to('#heroLogo', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
+        .to('#heroEyebrow', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
         .to('#heroHeadline', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3')
-        .to('#heroSub',      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-        .to('#heroCta',      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3');
+        .to('#heroSub', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+        .to('#heroCta', { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3');
     });
 
     /* ═══════════════════════════════════
@@ -1863,7 +2388,7 @@ void main(){
           start: 'top 88%',
           once: true,
         },
-        delay: (el.closest('.problem-grid, .whynow-grid, .spartan-inner, .market-stats, .competitor-grid, .roadmap-cols, .success-metrics, .whynow-visual') ? 
+        delay: (el.closest('.problem-grid, .whynow-grid, .spartan-inner, .market-stats, .competitor-grid, .roadmap-cols, .success-metrics, .whynow-visual') ?
           Array.from(el.parentElement.children).indexOf(el) * 0.08 : 0)
       });
     });
@@ -1871,11 +2396,11 @@ void main(){
     /* ═══════════════════════════════════
        FUNNEL ANIMATION
     ═══════════════════════════════════ */
-    (function(){
+    (function () {
       const bars = [
         { bar: '#fbar1', width: 100, num: '#fnum1', val: 2000, label: '2,000 DMs' },
-        { bar: '#fbar2', width: 50,  num: '#fnum2', val: 100,  label: '100 creators' },
-        { bar: '#fbar3', width: 22,  num: '#fnum3', val: 20,   label: '20 good videos' },
+        { bar: '#fbar2', width: 50, num: '#fnum2', val: 100, label: '100 creators' },
+        { bar: '#fbar3', width: 22, num: '#fnum3', val: 20, label: '20 good videos' },
       ];
       // Set initial widths
       bars.forEach(b => { document.querySelector(b.bar).style.width = b.width + '%'; });
@@ -1921,7 +2446,7 @@ void main(){
     /* ═══════════════════════════════════
        PHASES — clickable panels
     ═══════════════════════════════════ */
-    window.setPhase = function(idx) {
+    window.setPhase = function (idx) {
       document.querySelectorAll('.phase-indicator').forEach((el, i) => {
         el.classList.toggle('active', i === idx);
       });
@@ -1932,7 +2457,7 @@ void main(){
     };
 
     // Auto-advance phases on scroll
-    (function(){
+    (function () {
       const panels = [0, 1, 2];
       panels.forEach(idx => {
         ScrollTrigger.create({
@@ -1947,7 +2472,7 @@ void main(){
     /* ═══════════════════════════════════
        TYPEWRITER — SEARCH SIGNAL
     ═══════════════════════════════════ */
-    (function(){
+    (function () {
       const queries = [
         { text: 'how to manage creator payments at scale', tag: 'high' },
         { text: 'how to scale ugc campaign with 50+ creators', tag: 'high' },
@@ -2024,7 +2549,7 @@ void main(){
     });
 
     /* ── Hearing carousel drag-to-scroll ── */
-    (function() {
+    (function () {
       const carousel = document.getElementById('hearingCarousel');
       if (!carousel) return;
       let isDown = false, startX, scrollLeft;
@@ -2072,4 +2597,5 @@ void main(){
     document.getElementById('lightboxImg').addEventListener('click', e => e.stopPropagation());
   </script>
 </body>
+
 </html>
